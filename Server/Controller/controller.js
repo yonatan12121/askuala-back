@@ -305,9 +305,9 @@ exports.payli = (req, res) => {
 
 //   app.post("/register", 
 exports.register = async (req, res) => {
-  const { userName, fullName, phoneNumber, email, password, cpassword } = req.body;
-  const role = "user";
-  // const Creator =email;
+  const {  FullName, phoneNumber, email, password, cpassword } = req.body;
+  const role = "student";
+// const Creator =email;
 
   const encreptedPassword = await bcrypt.hash(password, 10);
 
@@ -315,8 +315,8 @@ exports.register = async (req, res) => {
 
   try {
     await User.create({
-      userName,
-      fullName,
+     
+      FullName,
       phoneNumber,
       email,
       password: encreptedPassword,
@@ -1423,6 +1423,7 @@ exports.loginUser = async (req, res) => {
     return res.json({ error: "User Not found" });
   }
   if (await bcrypt.compare(password, user.password)) {
+    console.log(password);
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
       expiresIn: "15m",
     });
