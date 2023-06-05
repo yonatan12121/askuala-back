@@ -18,6 +18,8 @@ route.post('/Getedirrname', controller.Getedirrname);
 route.post('/Getnot', controller.Getnot);
 route.post('/uploads', controller.uploads);
 route.post('/register', controller.register);
+route.post('/storebook', controller.storebook);
+route.post('/fetchbook', controller.fetchbook);
 route.post('/CreateEdir', controller.CreateEdir);
 route.post('/GetReqnot', controller.GetReqnot);
 route.post('/Getmemb', controller.Getmemb);

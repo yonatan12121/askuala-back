@@ -9,6 +9,7 @@ const cors = require("cors");
 app.use(cors());
 var User = require('../Model/UserModel');
 var Admin = require('../Model/AdminModel');
+var Book = require('../Model/Book');
 
 var Edirs = require('../model/model');
 var UserInfo = require('../model/UserInfoModel');
@@ -420,7 +421,33 @@ exports.register = async (req, res) => {
 
 
 //   });
+exports.storebook =(req,res)=>{
+const {BookName,
+  BookAuthor,
+  BookYear,
+  BookDepratment}= req.body;
+  try{
+  Book.create({BookName,BookAuthor,BookYear,BookDepratment});
+  res.send({ status: "ok" });
+  console.log("Book created successfully");
+  }catch(error){
+    res.send({status:"error"});
+    console.log(error);
+  }
+}
 
+exports.fetchbook =(req,res)=>{
+  const {username,department} = req.body;
+  Book.find({BookDepratment:department},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+    }
+    else{
+      res.status(200).send(data);
+    }
+
+  })
+}
 
 
 exports.verified = (req, res) => {
