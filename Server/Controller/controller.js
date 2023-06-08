@@ -10,6 +10,10 @@ app.use(cors());
 var User = require('../Model/UserModel');
 var Admin = require('../Model/AdminModel');
 var Book = require('../Model/Book');
+var Announcements = require('../Model/Announcement');
+var Todo = require('../Model/Todo');
+var Courses =require('../Model/Course');
+var Class = require('../Model/Class');
 
 var Edirs = require('../model/model');
 var UserInfo = require('../model/UserInfoModel');
@@ -306,23 +310,34 @@ exports.payli = (req, res) => {
 
 //   app.post("/register", 
 exports.register = async (req, res) => {
-  const {  FullName, phoneNumber, email, password, cpassword } = req.body;
-  const role = "student";
+  const { data} = req.body;
+  console.log(data);
+  // const role = "student";
 // const Creator =email;
+const Id = data.id;
+const fullName = data.FullName;
+const email = data.email;
+const password = data.password;
+const gender = data.gender;
+const phoneNumber=data.phoneNumber;
+const role=data.role;
+const department= data.department;
 
-  const encreptedPassword = await bcrypt.hash(password, 10);
+const encreptedPassword = await bcrypt.hash(password, 10);
 
   console.log("hello");
 
   try {
     await User.create({
-     
-      FullName,
+      Id,
+      fullName,
       phoneNumber,
+      gender,
+      department,
       email,
-      password: encreptedPassword,
-
+      password:encreptedPassword,
       role,
+
       verified: false
     });
 
@@ -332,80 +347,8 @@ exports.register = async (req, res) => {
     });
 
     // this is where email verification is done
-    console.log("forget password");
-    var nodemailer = require("nodemailer");
-    var transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "refugee823@gmail.com",
-        pass: "kulwwmpybuhcvfeq",
-      },
-    });
-    console.log("hello", email);
-    if (email) {
-      console.log(email);
-      const forgotPasswordToken = jwt.sign(
-        { userEmail: email },
-        "Wintu-Yoni@2022",
-        {
-          expiresIn: "4h",
-        }
-      );
-
-      var forgotPasswordLink =
-        "http://localhost:3000/login/?token=" + forgotPasswordToken;
-      var mailOptions = {
-        from: "valwintina@gmail.com",
-        to: email,
-        subject: "Email verifcation",
-        html:
-          '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
-          '<html xmlns="http://www.w3.org/1999/xhtml"><head>' +
-          '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' +
-          "<title>Forgot Password</title>" +
-          "<style> body {background-color: #FFFFFF; padding: 0; margin: 0;}</style></head>" +
-          '<body style="background-color: #FFFFFF; padding: 0; margin: 0;">' +
-          '<table border="0" cellpadding="0" cellspacing="10" height="100%" bgcolor="#FFFFFF" width="100%" style="max-width: 650px;" id="bodyTable">' +
-          '<tr><td align="center" valign="top">' +
-          '<table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailContainer" style="font-family:Arial; color: #333333;">' +
-          '<tr><td align="left" valign="top" colspan="2" style="border-bottom: 1px solid #CCCCCC; padding-  bottom: 10px;">' +
-          "</td></tr><tr>" +
-          '<td align="left" valign="top" colspan="2" style="border-bottom: 1px solid #CCCCCC; padding: 20px 0 10px 0;">' +
-          '<span style="font-size: 18px; font-weight: normal;">FORGOT PASSWORD</span></td></tr><tr>' +
-          '<td align="left" valign="top" colspan="2" style="padding-top: 10px;">' +
-          '<span style="font-size: 12px; line-height: 1.5; color: #333333;">' +
-          " We have sent you this email in response to your request to reset your password on <a href='http://localhost:3000/login'> Ethioian Refugee Sit</a><br/><br/>" +
-          'To verify your account, please follow the link below: <a href="' +
-          forgotPasswordLink +
-          '">verify</a><br/><br/>' +
-          "We recommend that you keep your password secure and not share it with anyone.If you didn't request to this message, simply ignore this message.<br/><br/>" +
-          "Ethiopian Refugee Customer Service </span> </td> </tr> </table> </td> </tr> </table> </body></html>",
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-          return res.json({
-            ErrorMessage: error,
-          });
-        } else {
-          console.log("succcesssss");
-          User.updateOne({ "email": email }, { $set: { verified: true } }, (err, doc) => {
-            if (err) return console.log(err);
-            // return res.json({ doc });
-          console.log("verifyed successfully");
-          })
-          return res.json({
-            SuccessMessage: "email successfully sent!",
-
-          });
-        }
-      });
-    } else {
-      return res.json({
-        ErrorMessage: "Email can't be none!",
-      });
-    }
+   
+    
     // upto here verifcation
     res.send({ status: "ok" });
   } catch (error) {
@@ -414,6 +357,54 @@ exports.register = async (req, res) => {
 
   }
 }
+exports.loginUser = async (req, res) => {
+  const { data} = req.body;
+  var Id= data.email;
+  var password = data.password;
+  console.log(req.body);
+  console.log("emaillll", 0);
+  const user = await User.findOne({ Id });
+  console.log(user);
+  if (!user) {
+    return res.json({ error: "User Not found" });
+  }
+  if (await bcrypt.compare(password, user.password)) {
+    console.log("the user is found",password);
+    const token = jwt.sign({ email: user.email }, JWT_SECRET, {
+      expiresIn: "15m",
+    });
+
+    // console.log( info.Emergencyaddress);
+    var check; 
+    if (user.verified==false) {
+      check = "notVerified";
+    }else{check="Verified"}
+  //  else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
+  //     check = "notDone";
+  //   } else {
+  //     check = "Done";
+  //   }
+
+    if (res.status(201)) {
+      const id = user.Id;
+      const password = user.password;
+      // console.log(email);
+      const role = user.role;
+      const fullName = user.fullName;
+      const department = user.department;
+      const gender = user.gender;
+      if (role == "Student") {
+        console.log(check);
+        return res.json({ status: "ok", role: "student", id, password, fullName, department, data: token });
+      } if (role == "admin") {
+        return res.json({ status: "ok", role: "admin", data: token });
+      }
+    } else {
+      return res.json({ error: "error" });
+    }
+  }
+  res.json({ status: "error", error: "InvAlid Password" });
+}
 //   );
 
 
@@ -421,10 +412,28 @@ exports.register = async (req, res) => {
 
 
 //   });
+
+
+exports.storeTodo =(req,res)=>{
+  const {data}= req.body;
+  var todo=data;
+  console.log(data);
+    try{
+    Todo.create({todo});
+    res.send({ status: "ok" });
+    console.log("todolist updated successfully");
+    }catch(error){
+      res.send({status:"error"});
+      console.log(error);
+    }
+  }
+
+
+
 exports.storebook =(req,res)=>{
 const {BookName,
   BookAuthor,
-  BookYear,
+  BookYear,   
   BookDepratment}= req.body;
   try{
   Book.create({BookName,BookAuthor,BookYear,BookDepratment});
@@ -435,19 +444,152 @@ const {BookName,
     console.log(error);
   }
 }
+exports.storecourse =(req,res)=>{
+   const { 
+    CourseId,
+    CourseName,
+    Ects,
+    CreaditHour,
+    lectureID,
+    courseDept,
+    }= req.body;
+    try{
+    Courses.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,});
+    res.send({ status: "ok" });
+    console.log("Course created successfully");
+    }catch(error){
+      res.send({status:"error"});
+      console.log(error);
+    }
+  }
+  exports.storeClass =(req,res)=>{
+    const { 
+     CourseId,
+     CourseName,
+     Ects,
+     CreaditHour,
+     lectureID,
+     courseDept,
+     StartDay,
+     EndDay,
+     Description
+     }= req.body;
+     try{
+     Class.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,StartDay,EndDay,Description});
+     res.send({ status: "ok" });
+     console.log("Class created successfully");
+     }catch(error){
+       res.send({status:"error"});
+       console.log(error);
+     }
+   }
+exports.storeannouce =(req,res)=>{
+const {
+  AnnouncementTitle,
+  Announcement,
+  AnonouncerName,
+  ClassId,
+  ClassLink,
+  AnonouncerRole,
+  Time}= req.body;
+  try{
+    Announcements.create({AnnouncementTitle,
+      Announcement,
+    AnonouncerName,
+    ClassId,
+    ClassLink,
+    AnonouncerRole,
+    Time});
+  res.send({ status: "ok" });
+  console.log("announcemnet created successfully");
+  }catch(error){
+    res.send({status:"error"});
+    console.log(error);
+  }
+}
 
 exports.fetchbook =(req,res)=>{
-  const {username,department} = req.body;
-  Book.find({BookDepratment:department},(err,data)=>{
+  // const {username,department} = req.body;
+  Book.find({},(err,data)=>{
     if (err){
       res.status(500).send(err);
+      console.log("hellp",data);
+
     }
     else{
+      console.log("hellp",data);
       res.status(200).send(data);
     }
 
   })
 }
+exports.fetchCourse =(req,res)=>{
+  // const {username,department} = req.body;
+  Courses.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log("the is error in fetching courses",data);
+
+    }
+    else{
+      console.log("The courses are the following ",data);
+      res.status(200).send(data);
+    }
+
+  })
+}
+
+
+exports.fetchClass =(req,res)=>{
+  // const {username,department} = req.body;
+  Class.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log("the is error in fetching Class",data);
+
+    }
+    else{
+      console.log("The class are the following ",data);
+      res.status(200).send(data);
+    }
+
+  })
+}
+
+
+exports.fetchTodo =(req,res)=>{
+  // const {username,department} = req.body;
+  Todo.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log("the is error in fetching Todolist",data);
+
+    }
+    else{
+      console.log("The Todolist are the following ",data);
+      res.status(200).send(data);
+    }
+
+  })
+}
+
+
+exports.fetchAnnouncement =(req,res)=>{
+  // const {username,department} = req.body;
+  Announcements.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log(data);
+
+    }
+    else{
+      console.log(data);
+      res.status(200).send(data);
+    }
+
+  })
+}
+
 
 
 exports.verified = (req, res) => {
@@ -1439,52 +1581,7 @@ exports.checkpayment = async (req, res) => {
 
 
 //   app.post("/login-user", 
-exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
-  console.log("emaillll", 0);
-  const user = await User.findOne({ email });
-  const info = await UserInfo.findOne({ email });
-  // console.log("emrgency address",info.Emergencyaddress);
-  if (!user) {
-    return res.json({ error: "User Not found" });
-  }
-  if (await bcrypt.compare(password, user.password)) {
-    console.log(password);
-    const token = jwt.sign({ email: user.email }, JWT_SECRET, {
-      expiresIn: "15m",
-    });
 
-    // console.log( info.Emergencyaddress);
-    var check; 
-    if (user.verified==false) {
-      check = "notVerified";
-    }
-
-   else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
-      check = "notDone";
-    } else {
-      check = "Done";
-    }
-
-    if (res.status(201)) {
-      const email = user.email;
-      const password = user.password;
-      console.log(email);
-      const role = user.role;
-      const fullName = user.fullName;
-      if (role == "user") {
-        console.log(check);
-        return res.json({ status: "ok", role: "user", email, password, fullName, check, data: token });
-      } if (role == "admin") {
-        return res.json({ status: "ok", role: "admin", data: token });
-      }
-    } else {
-      return res.json({ error: "error" });
-    }
-  }
-  res.json({ status: "error", error: "InvAlid Password" });
-}
 //   );
 
 
