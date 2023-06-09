@@ -13,9 +13,11 @@ const NotificationScehma = new mongoose.Schema(
   )
   const UserDetailsScehma = new mongoose.Schema(
     {
-      userName: String,
+      Id:String,
       fullName: String,
       phoneNumber: String,
+      gender:String,
+      department:String,
       email: String,
       password: String,
       cpassword: String,
