@@ -14,6 +14,7 @@ var Announcements = require('../Model/Announcement');
 var Todo = require('../Model/Todo');
 var Courses =require('../Model/Course');
 var Class = require('../Model/Class');
+var Questions = require('../Model/Question');
 
 var Edirs = require('../model/model');
 var UserInfo = require('../model/UserInfoModel');
@@ -444,6 +445,44 @@ const {BookName,
     console.log(error);
   }
 }
+
+exports.storeQuestion =(req,res)=>{
+  const { Question,
+    QuestionAsker,
+    Department,}= req.body;
+    try{
+    Questions.create({Question,QuestionAsker,Department});
+    res.send({ status: "ok" });
+    console.log("Question created successfully");
+    }catch(error){
+      res.send({status:"error"});
+      console.log(error);
+    }
+  }
+  exports.storeAnswers =(req,res)=>{
+    const { Answer,Name,Count,QuestionId}= req.body;
+
+      try{
+      Questions.updateMany({ "QuestionAsker": "Yonatan"}, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
+      // create({Question,QuestionAsker,Department});
+      res.send({ status: "ok" });
+      console.log("Question created successfully");
+      }catch(error){
+        res.send({status:"error"});
+        console.log(error);
+      }
+    }
+  // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
+  //   if (err) return console.log(err);
+  //   console.log("NOtified")
+
+
+
+
+
+
+  // });
+
 exports.storecourse =(req,res)=>{
    const { 
     CourseId,
@@ -523,6 +562,23 @@ exports.fetchbook =(req,res)=>{
 
   })
 }
+
+exports.fetchQuestion =(req,res)=>{
+  // const {username,department} = req.body;
+  Questions.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log("The is error in fetching Question",data);
+
+    }
+    else{
+      console.log("The Question are the following",data);
+      res.status(200).send(data);
+    }
+
+  })
+}
+
 exports.fetchCourse =(req,res)=>{
   // const {username,department} = req.body;
   Courses.find({},(err,data)=>{
