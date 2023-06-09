@@ -417,14 +417,14 @@ exports.loginUser = async (req, res) => {
 
 exports.storeTodo =(req,res)=>{
   const {data}= req.body;
-  var inputTodo=data.data;
+  var todo=data.data;
   console.log(data);
     try{
-    Todo.create({inputTodo});
+    Todo.create({todo});
     res.send({ status: "ok" });
     console.log("todolist updated successfully");
     }catch(error){
-      res.send({status:"error"}); 
+      res.send({status:"error"});
       console.log(error);
     }
   }
