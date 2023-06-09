@@ -32,7 +32,7 @@ route.post('/Join', controller.Join);
 route.post('/Accept1', controller.Accept1);
 route.post('/RequestService', controller.RequestService);
 route.post('/AcceptService', controller.AcceptService);
-route.post('/checkpayment', controller.checkpayment);
+route.post('/checkpayment', controller.checkpayment); 
 route.post('/login-user', controller.loginUser);
 route.post('/LeaveEdirr', controller.LeaveEdirr);
 route.post('/UpdateBasic', controller.UpdateBasic);
