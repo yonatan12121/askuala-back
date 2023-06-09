@@ -424,7 +424,7 @@ exports.storeTodo =(req,res)=>{
     res.send({ status: "ok" });
     console.log("todolist updated successfully");
     }catch(error){
-      res.send({status:"error"});
+      res.send({status:"error"}); 
       console.log(error);
     }
   }
