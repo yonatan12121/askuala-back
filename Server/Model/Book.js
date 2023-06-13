@@ -6,7 +6,6 @@ const bookSchema = new mongoose.Schema({
     BookYear:String,
     BookDepratment:String
 
-
 },{timestamps:true},
 {
     collation:"Books"
