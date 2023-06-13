@@ -504,16 +504,17 @@ exports.storecourse =(req,res)=>{
   }
   exports.storeClass =(req,res)=>{
     const { 
-     CourseId,
-     CourseName,
-     Ects,
-     CreaditHour,
-     lectureID,
-     courseDept,
-     StartDay,
-     EndDay,
-     Description
+     data
      }= req.body;
+     CourseId=data.courseId;
+     CourseName=data.courseName;
+     Ects=data.ETCS;
+     CreaditHour=data.creaditHour;
+     lectureID=data.classCreator;
+     courseDept=data.courseDept;
+     StartDay=data.startDay;
+     EndDay=data.endDay;
+     Description=data.description;
      try{
      Class.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,StartDay,EndDay,Description});
      res.send({ status: "ok" });
@@ -636,12 +637,12 @@ exports.fetchAnswer =(req,res)=>{
   Questions.find({},(err,data)=>{
     if (err){
       res.status(500).send(err);
-      console.log("the is error in fetching Answer",err);
+      console.log("The is error in fetching Answer",data);
 
     }
     else{
-      console.log("The Answer are the following ",data);
-      res.status(200).send(data.Answer);
+      console.log("The Answer are the following",data);
+      res.status(200).send(data);
     }
 
   })
