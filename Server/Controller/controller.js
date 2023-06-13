@@ -540,8 +540,7 @@ const {
     AnonouncerName,
     ClassId,
     ClassLink,
-    AnonouncerRole,
-    Time});
+      Time});
   res.send({ status: "ok" });
   console.log("announcemnet created successfully");
   }catch(error){
