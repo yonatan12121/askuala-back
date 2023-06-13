@@ -1,4 +1,11 @@
 const mongoose= require("mongoose");
+const MemberScehma = new mongoose.Schema(
+    {
+      StudentId:String,
+      StudentName:String,
+      StudentDept:String
+    },{timestamps:true},
+  )
 
 const ClassSchema = new mongoose.Schema({
     
@@ -6,6 +13,7 @@ const ClassSchema = new mongoose.Schema({
     CourseName:String,
     Ects:String,
     CreaditHour:String,
+    Member:[MemberScehma],
     lectureID:String,
     courseDept:String,
     StartDay:String,

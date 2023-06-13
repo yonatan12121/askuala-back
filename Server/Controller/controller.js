@@ -526,13 +526,14 @@ exports.storecourse =(req,res)=>{
    }
 exports.storeannouce =(req,res)=>{
 const {
-  AnnouncementTitle,
-  Announcement,
-  AnonouncerName,
-  ClassId,
-  ClassLink,
-  AnonouncerRole,
-  Time}= req.body;
+  data}= req.body;
+  AnnouncementTitle=data.title,
+  Announcement=data.message,
+  AnonouncerName=data.anonouncerName,
+  ClassId=data.classId,
+  ClassLink=data.URL,
+  // AnonouncerRole=data.AnonouncerRole,
+  Time=data.startedTime
   try{
     Announcements.create({AnnouncementTitle,
       Announcement,
@@ -633,8 +634,9 @@ exports.fetchTodo =(req,res)=>{
 
 
 exports.fetchAnswer =(req,res)=>{
-  const {QuestionId} = req.body;
-  Questions.find({ _id: "6481ca9797f3be879999b060" },(err,data)=>{
+  const {data} = req.body;
+  QuestionId= data.QuestionId;
+  Questions.find({ _id: QuestionId },(err,data)=>{
     if (err){
       res.status(500).send(err);
       console.log("The is error in fetching Answer",data);
@@ -665,6 +667,30 @@ exports.fetchAnnouncement =(req,res)=>{
 
   })
 }
+
+
+
+exports.JoinClass = async (req, res) => {
+  const { ClassId,StudentId,StudentName,StudentDept,lectureID } = req.body;
+  //   console.log(ClassId,StudentId,StudentName,StudentDept);
+  Class.updateOne({ _id: ClassId }, { $push: { Member: [{StudentId:StudentId,StudentName:StudentName,StudentDept:StudentDept }] } }, (err, doc) => {
+    if (err) return console.log(err);
+    User.updateOne({ Id: lectureID }, { $push: { Notification: [{ text: StudentName + " wants to join your class", name: StudentName }] } }, (err, doc) => {
+      if (err) return console.log(err);
+      console.log("NOtified")
+    });
+    res.json(doc)
+
+  });
+
+
+
+}
+
+
+
+
+
 
 
 
