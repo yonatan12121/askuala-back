@@ -485,15 +485,16 @@ exports.storeQuestion =(req,res)=>{
 
 exports.storecourse =(req,res)=>{
    const { 
-    CourseId,
-    CourseName,
-    Ects,
-    CreaditHour,
-    lectureID,
-    courseDept,
-    }= req.body;
+  data}= req.body;
+    CourseId=data.courseId,
+    CourseName=data.courseName,
+    Ects=data.ETCS,
+    CreaditHour=data.creaditHours,
+    lectureID=data.teacherId,
+    courseDept=data.courseDept,
+    CourseCreator=data.CourseCreator
     try{
-    Courses.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,});
+    Courses.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,CourseCreator});
     res.send({ status: "ok" });
     console.log("Course created successfully");
     }catch(error){
@@ -628,6 +629,24 @@ exports.fetchTodo =(req,res)=>{
 
   })
 }
+
+
+exports.fetchAnswer =(req,res)=>{
+  // const {username,department} = req.body;
+  Questions.find({},(err,data)=>{
+    if (err){
+      res.status(500).send(err);
+      console.log("the is error in fetching Answer",err);
+
+    }
+    else{
+      console.log("The Answer are the following ",data);
+      res.status(200).send(data.Answer);
+    }
+
+  })
+}
+
 
 
 exports.fetchAnnouncement =(req,res)=>{
@@ -1718,7 +1737,7 @@ exports.UpdateMarital = async (req, res) => {
 //   app.post("/login-user1", 
 exports.loginUser1 = async (req, res) => {
   const { email, password } = req.body;
-  console.log(password);
+  console.log(email);
 
   const user = await User.findOne({ email });
   if (!user) {

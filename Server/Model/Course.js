@@ -8,6 +8,7 @@ const CourseSchema = new mongoose.Schema({
     CreaditHour:String,
     lectureID:String,
     courseDept:String,
+    CourseCreator:String,
 },{timestamps:true},
 {
     collation:"Course"
