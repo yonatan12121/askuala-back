@@ -6,7 +6,6 @@ const AnnounceSchema = new mongoose.Schema({
     AnonouncerName:String,
     ClassId:String,
     ClassLink:String,
-    AnonouncerRole:String,
     Time:String,
 
 },{timestamps:true},

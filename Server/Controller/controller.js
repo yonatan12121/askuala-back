@@ -527,12 +527,12 @@ exports.storecourse =(req,res)=>{
 exports.storeannouce =(req,res)=>{
 const {
   data}= req.body;
+  console.log(data);
   AnnouncementTitle=data.title,
   Announcement=data.message,
   AnonouncerName=data.anonouncerName,
   ClassId=data.classId,
   ClassLink=data.URL,
-  // AnonouncerRole=data.AnonouncerRole,
   Time=data.startedTime
   try{
     Announcements.create({AnnouncementTitle,
