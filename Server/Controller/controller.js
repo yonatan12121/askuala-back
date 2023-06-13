@@ -417,7 +417,7 @@ exports.loginUser = async (req, res) => {
 
 exports.storeTodo =(req,res)=>{
   const {data}= req.body;
-  var todo=data;
+  var todo=data.data;
   console.log(data);
     try{
     Todo.create({todo});
