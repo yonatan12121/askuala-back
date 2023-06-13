@@ -417,7 +417,7 @@ exports.loginUser = async (req, res) => {
 
 exports.storeTodo =(req,res)=>{
   const {data}= req.body;
-  var todo=data.data;
+  var todo=data;
   console.log(data);
     try{
     Todo.create({todo});
@@ -459,11 +459,11 @@ exports.storeQuestion =(req,res)=>{
       console.log(error);
     }
   }
-  exports.storeAnswers =async (req,res)=>{
+  exports.storeAnswers =(req,res)=>{
     const { Answer,Name,Count,QuestionId}= req.body;
 
       try{
-      await Questions.updateMany({ _id: "6481ca9797f3be879999b060"}, { $push: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
+      Questions.updateMany({ "QuestionAsker": "Yonatan"}, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
       // create({Question,QuestionAsker,Department});
       res.send({ status: "ok" });
       console.log("Question created successfully");
