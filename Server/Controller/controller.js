@@ -509,10 +509,10 @@ exports.storecourse =(req,res)=>{
      CourseId=data.courseId;
      CourseName=data.courseName;
      Ects=data.ETCS;
-     CreaditHour=data.creaditHour;
+     CreaditHour=data.creaditHours;
      lectureID=data.classCreator;
      courseDept=data.courseDept;
-     StartDay=data.startDay;
+     StartDay=data.startedDay;
      EndDay=data.endDay;
      Description=data.description;
      try{
@@ -633,8 +633,8 @@ exports.fetchTodo =(req,res)=>{
 
 
 exports.fetchAnswer =(req,res)=>{
-  // const {username,department} = req.body;
-  Questions.find({},(err,data)=>{
+  const {QuestionId} = req.body;
+  Questions.find({ _id: "6481ca9797f3be879999b060" },(err,data)=>{
     if (err){
       res.status(500).send(err);
       console.log("The is error in fetching Answer",data);
