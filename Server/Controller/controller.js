@@ -473,8 +473,16 @@ exports.storeAnswers = (req, res) => {
     QuestionId);
 
     Questions.updateOne({ _id: QuestionId }, { $push: { Answer: [{ Answer:Answer,Name:Name,QuestionId,QuestionId }] } }, (err, doc) => {
-      if (err) return console.log(err);
-      console.log("NOtified");
+      if (err) {
+        res.status(500).send(err);
+        console.log("hellp", err);
+  
+      }
+      else {
+        console.log("hellp", doc);
+        res.status(200).send(doc);
+      }
+  
 
      
     });
