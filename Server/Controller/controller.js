@@ -720,7 +720,7 @@ exports.fetchAnnouncement = (req, res) => {
 
 exports.JoinClass = async (req, res) => {
   const { data} = req.body;
-  var ClassId= data.CourseId;
+  var ClassId= data._id;
   var StudentId= data.id;
   var StudentName= data.Username;
   var StudentDept= data.department;
