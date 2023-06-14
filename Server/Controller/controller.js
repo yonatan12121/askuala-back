@@ -12,7 +12,7 @@ var Admin = require('../Model/AdminModel');
 var Book = require('../Model/Book');
 var Announcements = require('../Model/Announcement');
 var Todo = require('../Model/Todo');
-var Courses =require('../Model/Course');
+var Courses = require('../Model/Course');
 var Class = require('../Model/Class');
 var Questions = require('../Model/Question');
 
@@ -65,235 +65,235 @@ exports.img = async (req, res) => {
     }
   });
 }
-  // exports.test=async()=>{
-  //   var i;
-  // const PaymentDay="11"
-  // // Your code here
-  // const now = new Date();
-  // const aa = String(now);
-  // var bb = aa.split(" ", 4);
-  // const curentpayment = bb[2];
-  // console.log(curentpayment);
-  // const Edir= await Edirs.find({CurrentPaymentDay:curentpayment});
-  // // const users= await User.find();
-  // // console.log(Edir);
-  // // console.log(Edir[0].Members[0].Email)
-  // var Store = []
-  // Edir.forEach((eDir)=>{
-  //   eDir.Members.forEach((members)=>{
-  //     Store = Store.concat( members.Email)
-  //   })
-  // })
-  // // console.log(Store);
+// exports.test=async()=>{
+//   var i;
+// const PaymentDay="11"
+// // Your code here
+// const now = new Date();
+// const aa = String(now);
+// var bb = aa.split(" ", 4);
+// const curentpayment = bb[2];
+// console.log(curentpayment);
+// const Edir= await Edirs.find({CurrentPaymentDay:curentpayment});
+// // const users= await User.find();
+// // console.log(Edir);
+// // console.log(Edir[0].Members[0].Email)
+// var Store = []
+// Edir.forEach((eDir)=>{
+//   eDir.Members.forEach((members)=>{
+//     Store = Store.concat( members.Email)
+//   })
+// })
+// // console.log(Store);
 
-  // Store.forEach(async (eDir) =>{
-  //   const paymentNotification =await Edirs.find({"Members.Email": eDir,"Members.Payment": "Not Payed",CurrentPaymentDay:curentpayment});
-  //   // console.log(paymentNotification);
-  //   var next;
-  //   paymentNotification.forEach((PN)=>{
-  //     console.log(PN.PaymentDuration)
-      
-  //     if(PN.PaymentDuration==30){
-  //       var newpayment =(parseInt(PN.CurrentPaymentDay) + 30)
-        
-  //       console.log(newpayment);
-  //       if (newpayment>30){
-  //        next = newpayment-30
-  //         console.log(next)
-           
-  //       }
-  //       else{
-  //         next=newpayment;
-  //       }
-  //     }
-  //     else if(PN.PaymentDuration==7){
-  //       console.log("we in 7");
-  //       var newpayment =(parseInt(PN.CurrentPaymentDay) + 7)
+// Store.forEach(async (eDir) =>{
+//   const paymentNotification =await Edirs.find({"Members.Email": eDir,"Members.Payment": "Not Payed",CurrentPaymentDay:curentpayment});
+//   // console.log(paymentNotification);
+//   var next;
+//   paymentNotification.forEach((PN)=>{
+//     console.log(PN.PaymentDuration)
 
-  //       console.log(newpayment);
-  //       if (newpayment>30){
-  //         next = newpayment-30
-  //         console.log(next)
-           
-  //       }
-  //       else{
-  //         next=newpayment;
-  //       }
-  //     }else if(PN.PaymentDuration==14){
-  //       var newpayment =(parseInt(PN.CurrentPaymentDay) + 14)
+//     if(PN.PaymentDuration==30){
+//       var newpayment =(parseInt(PN.CurrentPaymentDay) + 30)
 
-  //       console.log(newpayment);
-  //       if (newpayment>30){
-  //          next = newpayment-30
-  //         console.log(next)
-           
-  //       }
-  //       else{
-  //         next=newpayment;
-  //       }
-  //     }else if(PN.PaymentDuration==21){
-  //       var newpayment =(parseInt(PN.CurrentPaymentDay) + 21)
+//       console.log(newpayment);
+//       if (newpayment>30){
+//        next = newpayment-30
+//         console.log(next)
 
-  //       console.log(newpayment);
-  //       if (newpayment>30){
-  //          next = newpayment-30
-  //         console.log(next)
-           
-  //       }
-  //       else{
-  //         next=newpayment;
-  //       }
-  //     }
-  //     console.log(next);
-  //        Edirs.updateOne( { NameOfeDirr: PN.NameOfeDirr },{ $set: { CurrentPaymentDay: next }},(err,doc)=>{
-  //         if (err) return console.log(err);
-  //         console.log("current payemnt updated ");
-  //       });
-  //     // console.log(PN.NameOfeDirr,now,PN.Amount)
-  //     // User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
-  //     //   if (err) return console.log(err);
-       
-  //     // });
-  //   })
-  // }
-  // )
-  // User.updateOne({email:email},{$push:{Notification:[{text:"you have joined "+ edirr,edirr:edirr}]}},(err,doc)=>{
-  //       if (err) return console.log(err);
-  //       console.log("NOtified")
-  //     });
-  // var b=[];
-  // for (i =0 ;i < users.length;i++){
- 
-  //   b = b.concat(users[i].Members.Email);
-  //   //  console.log(b);
-  // }
-  
-  //   // console.log(users[);
-   
+//       }
+//       else{
+//         next=newpayment;
+//       }
+//     }
+//     else if(PN.PaymentDuration==7){
+//       console.log("we in 7");
+//       var newpayment =(parseInt(PN.CurrentPaymentDay) + 7)
 
-  
+//       console.log(newpayment);
+//       if (newpayment>30){
+//         next = newpayment-30
+//         console.log(next)
+
+//       }
+//       else{
+//         next=newpayment;
+//       }
+//     }else if(PN.PaymentDuration==14){
+//       var newpayment =(parseInt(PN.CurrentPaymentDay) + 14)
+
+//       console.log(newpayment);
+//       if (newpayment>30){
+//          next = newpayment-30
+//         console.log(next)
+
+//       }
+//       else{
+//         next=newpayment;
+//       }
+//     }else if(PN.PaymentDuration==21){
+//       var newpayment =(parseInt(PN.CurrentPaymentDay) + 21)
+
+//       console.log(newpayment);
+//       if (newpayment>30){
+//          next = newpayment-30
+//         console.log(next)
+
+//       }
+//       else{
+//         next=newpayment;
+//       }
+//     }
+//     console.log(next);
+//        Edirs.updateOne( { NameOfeDirr: PN.NameOfeDirr },{ $set: { CurrentPaymentDay: next }},(err,doc)=>{
+//         if (err) return console.log(err);
+//         console.log("current payemnt updated ");
+//       });
+//     // console.log(PN.NameOfeDirr,now,PN.Amount)
+//     // User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
+//     //   if (err) return console.log(err);
+
+//     // });
+//   })
+// }
+// )
+// User.updateOne({email:email},{$push:{Notification:[{text:"you have joined "+ edirr,edirr:edirr}]}},(err,doc)=>{
+//       if (err) return console.log(err);
+//       console.log("NOtified")
+//     });
+// var b=[];
+// for (i =0 ;i < users.length;i++){
+
+//   b = b.concat(users[i].Members.Email);
+//   //  console.log(b);
+// }
+
+//   // console.log(users[);
+
+
+
 
 // }
 
 
 
-exports.runOnceADay=async() => {
- 
+exports.runOnceADay = async () => {
+
   var i;
-  const PaymentDay="11"
+  const PaymentDay = "11"
   // Your code here
   const now = new Date();
   const aa = String(now);
   var bb = aa.split(" ", 4);
   const curentpayment = bb[2];
   console.log(curentpayment);
-  const Edir= await Edirs.find({CurrentPaymentDay:curentpayment});
+  const Edir = await Edirs.find({ CurrentPaymentDay: curentpayment });
   // const users= await User.find();
   // console.log(users);
   // console.log(Edir[0].Members[0].Email)
   var Store = []
-  Edir.forEach((eDir)=>{
-    eDir.Members.forEach((members)=>{
-      Store = Store.concat( members.Email)
+  Edir.forEach((eDir) => {
+    eDir.Members.forEach((members) => {
+      Store = Store.concat(members.Email)
     })
   })
   // console.log(Store);
 
-  Store.forEach(async (eDir) =>{
-    const paymentNotification =await Edirs.find({"Members.Email": eDir,"Members.Payment": "Not Payed",CurrentPaymentDay:curentpayment});
+  Store.forEach(async (eDir) => {
+    const paymentNotification = await Edirs.find({ "Members.Email": eDir, "Members.Payment": "Not Payed", CurrentPaymentDay: curentpayment });
     // console.log(paymentNotification);
-    paymentNotification.forEach((PN)=>{
-      console.log(PN.NameOfeDirr,now,PN.Amount)
-      User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
+    paymentNotification.forEach((PN) => {
+      console.log(PN.NameOfeDirr, now, PN.Amount)
+      User.updateOne({ email: eDir }, { $push: { Notification: [{ text: "Your monthly payment is due ", edirr: PN.NameOfeDirr, type: "mPayment", Date: now, Payment: PN.Amount }] } }, (err, doc) => {
         if (err) return console.log(err);
         console.log("NOtified");
         var next;
-        paymentNotification.forEach((PN)=>{
+        paymentNotification.forEach((PN) => {
           console.log(PN.PaymentDuration)
-          
-          if(PN.PaymentDuration==30){
-            var newpayment =(parseInt(PN.CurrentPaymentDay) + 30)
-            
+
+          if (PN.PaymentDuration == 30) {
+            var newpayment = (parseInt(PN.CurrentPaymentDay) + 30)
+
             console.log(newpayment);
-            if (newpayment>30){
-             next = newpayment-30
+            if (newpayment > 30) {
+              next = newpayment - 30
               console.log(next)
-               
+
             }
-            else{
-              next=newpayment;
+            else {
+              next = newpayment;
             }
           }
-          else if(PN.PaymentDuration==7){
+          else if (PN.PaymentDuration == 7) {
             console.log("we in 7");
-            var newpayment =(parseInt(PN.CurrentPaymentDay) + 7)
-    
+            var newpayment = (parseInt(PN.CurrentPaymentDay) + 7)
+
             console.log(newpayment);
-            if (newpayment>30){
-              next = newpayment-30
+            if (newpayment > 30) {
+              next = newpayment - 30
               console.log(next)
-               
+
             }
-            else{
-              next=newpayment;
+            else {
+              next = newpayment;
             }
-          }else if(PN.PaymentDuration==14){
-            var newpayment =(parseInt(PN.CurrentPaymentDay) + 14)
-    
+          } else if (PN.PaymentDuration == 14) {
+            var newpayment = (parseInt(PN.CurrentPaymentDay) + 14)
+
             console.log(newpayment);
-            if (newpayment>30){
-               next = newpayment-30
+            if (newpayment > 30) {
+              next = newpayment - 30
               console.log(next)
-               
+
             }
-            else{
-              next=newpayment;
+            else {
+              next = newpayment;
             }
-          }else if(PN.PaymentDuration==21){
-            var newpayment =(parseInt(PN.CurrentPaymentDay) + 21)
-    
+          } else if (PN.PaymentDuration == 21) {
+            var newpayment = (parseInt(PN.CurrentPaymentDay) + 21)
+
             console.log(newpayment);
-            if (newpayment>30){
-               next = newpayment-30
+            if (newpayment > 30) {
+              next = newpayment - 30
               console.log(next)
-               
+
             }
-            else{
-              next=newpayment;
+            else {
+              next = newpayment;
             }
           }
           console.log(next);
-             Edirs.updateOne( { NameOfeDirr: PN.NameOfeDirr },{ $set: { CurrentPaymentDay: next }},(err,doc)=>{
-              if (err) return console.log(err);
-              console.log("current payemnt updated ");
-            });
-         
+          Edirs.updateOne({ NameOfeDirr: PN.NameOfeDirr }, { $set: { CurrentPaymentDay: next } }, (err, doc) => {
+            if (err) return console.log(err);
+            console.log("current payemnt updated ");
+          });
+
         })
-      
+
       });
     })
   })
-// 
-// //////////// / /////update the curent payment day by the duration;
-// 
+  // 
+  // //////////// / /////update the curent payment day by the duration;
+  // 
   // User.updateOne({email:email},{$push:{Notification:[{text:"you have joined "+ edirr,edirr:edirr}]}},(err,doc)=>{
   //       if (err) return console.log(err);
   //       console.log("NOtified")
   //     });
   // var b=[];
   // for (i =0 ;i < users.length;i++){
- 
+
   //   b = b.concat(users[i].Members.Email);
   //   //  console.log(b);
   // }
-  
-    // console.log(users[);
-   
 
-  
+  // console.log(users[);
 
 
-  
+
+
+
+
 }
 //   )
 // app.get("/api/get/payli",
@@ -311,20 +311,20 @@ exports.payli = (req, res) => {
 
 //   app.post("/register", 
 exports.register = async (req, res) => {
-  const { data} = req.body;
+  const { data } = req.body;
   console.log(data);
   // const role = "student";
-// const Creator =email;
-const Id = data.id;
-const fullName = data.FullName;
-const email = data.email;
-const password = data.password;
-const gender = data.gender;
-const phoneNumber=data.phoneNumber;
-const role=data.role;
-const department= data.department;
+  // const Creator =email;
+  const Id = data.id;
+  const fullName = data.FullName;
+  const email = data.email;
+  const password = data.password;
+  const gender = data.gender;
+  const phoneNumber = data.phoneNumber;
+  const role = data.role;
+  const department = data.department;
 
-const encreptedPassword = await bcrypt.hash(password, 10);
+  const encreptedPassword = await bcrypt.hash(password, 10);
 
   console.log("hello");
 
@@ -336,7 +336,7 @@ const encreptedPassword = await bcrypt.hash(password, 10);
       gender,
       department,
       email,
-      password:encreptedPassword,
+      password: encreptedPassword,
       role,
 
       verified: false
@@ -348,8 +348,8 @@ const encreptedPassword = await bcrypt.hash(password, 10);
     });
 
     // this is where email verification is done
-   
-    
+
+
     // upto here verifcation
     res.send({ status: "ok" });
   } catch (error) {
@@ -359,8 +359,8 @@ const encreptedPassword = await bcrypt.hash(password, 10);
   }
 }
 exports.loginUser = async (req, res) => {
-  const { data} = req.body;
-  var Id= data.email;
+  const { data } = req.body;
+  var Id = data.email;
   var password = data.password;
   console.log(req.body);
   console.log("emaillll", 0);
@@ -370,21 +370,21 @@ exports.loginUser = async (req, res) => {
     return res.json({ error: "User Not found" });
   }
   if (await bcrypt.compare(password, user.password)) {
-    console.log("the user is found",password);
+    console.log("the user is found", password);
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
       expiresIn: "15m",
     });
 
     // console.log( info.Emergencyaddress);
-    var check; 
-    if (user.verified==false) {
+    var check;
+    if (user.verified == false) {
       check = "notVerified";
-    }else{check="Verified"}
-  //  else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
-  //     check = "notDone";
-  //   } else {
-  //     check = "Done";
-  //   }
+    } else { check = "Verified" }
+    //  else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
+    //     check = "notDone";
+    //   } else {
+    //     check = "Done";
+    //   }
 
     if (res.status(201)) {
       const id = user.Id;
@@ -415,264 +415,273 @@ exports.loginUser = async (req, res) => {
 //   });
 
 
-exports.storeTodo =(req,res)=>{
-  const {data}= req.body;
-  var todo=data.data;
+exports.storeTodo = (req, res) => {
+  const { data } = req.body;
+  var todo = data.data;
   console.log(data);
-    try{
-    Todo.create({todo});
+  try {
+    Todo.create({ todo });
     res.send({ status: "ok" });
     console.log("todolist updated successfully");
-    }catch(error){
-      res.send({status:"error"});
-      console.log(error);
-    }
-  }
-
-
-
-exports.storebook =(req,res)=>{
-const {BookName,
-  BookAuthor,
-  BookYear,   
-  BookDepratment}= req.body;
-  try{
-  Book.create({BookName,BookAuthor,BookYear,BookDepratment});
-  res.send({ status: "ok" });
-  console.log("Book created successfully");
-  }catch(error){
-    res.send({status:"error"});
+  } catch (error) {
+    res.send({ status: "error" });
     console.log(error);
   }
 }
 
-exports.storeQuestion =(req,res)=>{
+
+
+exports.storebook = (req, res) => {
+  const { BookName,
+    BookAuthor,
+    BookYear,
+    BookDepratment } = req.body;
+  try {
+    Book.create({ BookName, BookAuthor, BookYear, BookDepratment });
+    res.send({ status: "ok" });
+    console.log("Book created successfully");
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
+  }
+}
+
+exports.storeQuestion = (req, res) => {
   const { Question,
     QuestionAsker,
-    Department,}= req.body;
-    try{
-    Questions.create({Question,QuestionAsker,Department});
+    Department, } = req.body;
+  try {
+    Questions.create({ Question, QuestionAsker, Department });
     res.send({ status: "ok" });
     console.log("Question created successfully");
-    }catch(error){
-      res.send({status:"error"});
-      console.log(error);
-    }
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
   }
-  exports.storeAnswers =(req,res)=>{
-    const { Answer,Name,Count,QuestionId}= req.body;
+}
+exports.storeAnswers = (req, res) => {
+  const { Answer, Name, Count, QuestionId } = req.body;
 
-      try{
-      Questions.updateMany({ "QuestionAsker": "Yonatan"}, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
-      // create({Question,QuestionAsker,Department});
-      res.send({ status: "ok" });
-      console.log("Question created successfully");
-      }catch(error){
-        res.send({status:"error"});
-        console.log(error);
-      }
-    }
-  // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
-  //   if (err) return console.log(err);
-  //   console.log("NOtified")
-
-
-
+  try {
+    Questions.updateMany({ "QuestionAsker": "Yonatan" }, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
+    // create({Question,QuestionAsker,Department});
+    res.send({ status: "ok" });
+    console.log("Question created successfully");
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
+  }
+}
+// Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
+//   if (err) return console.log(err);
+//   console.log("NOtified")
 
 
 
-  // });
 
-exports.storecourse =(req,res)=>{
-   const { 
-  data}= req.body;
-    CourseId=data.courseId,
-    CourseName=data.courseName,
-    Ects=data.ETCS,
-    CreaditHour=data.creaditHours,
-    lectureID=data.teacherId,
-    courseDept=data.courseDept,
-    CourseCreator=data.CourseCreator
-    try{
-    Courses.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,CourseCreator});
+
+
+// });
+
+exports.storecourse = (req, res) => {
+  const {
+    data } = req.body;
+  CourseId = data.courseId,
+    CourseName = data.courseName,
+    Ects = data.ETCS,
+    CreaditHour = data.creaditHours,
+    lectureID = data.teacherId,
+    courseDept = data.courseDept,
+    CourseCreator = data.CourseCreator
+  try {
+    Courses.create({ CourseId, CourseName, Ects, CreaditHour, lectureID, courseDept, CourseCreator });
     res.send({ status: "ok" });
     console.log("Course created successfully");
-    }catch(error){
-      res.send({status:"error"});
-      console.log(error);
-    }
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
   }
-  exports.storeClass =(req,res)=>{
-    const { 
-     data
-     }= req.body;
-     CourseId=data.courseId;
-     CourseName=data.courseName;
-     Ects=data.ETCS;
-     CreaditHour=data.creaditHours;
-     lectureID=data.classCreator;
-     courseDept=data.courseDept;
-     StartDay=data.startedDay;
-     EndDay=data.endDay;
-     Description=data.description;
-     try{
-     Class.create({CourseId,CourseName,Ects,CreaditHour,lectureID,courseDept,StartDay,EndDay,Description});
-     res.send({ status: "ok" });
-     console.log("Class created successfully");
-     }catch(error){
-       res.send({status:"error"});
-       console.log(error);
-     }
-   }
-exports.storeannouce =(req,res)=>{
-const {
-  data}= req.body;
+}
+exports.storeClass = (req, res) => {
+  const {
+    data
+  } = req.body;
+  CourseId = data.courseId;
+  CourseName = data.courseName;
+  Ects = data.ETCS;
+  CreaditHour = data.creaditHours;
+  lectureID = data.classCreator;
+  courseDept = data.courseDept;
+  StartDay = data.startedDay;
+  EndDay = data.endDay;
+  Description = data.description;
+  try {
+    Class.create({ CourseId, CourseName, Ects, CreaditHour, lectureID, courseDept, StartDay, EndDay, Description });
+    res.send({ status: "ok" });
+    console.log("Class created successfully");
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
+  }
+}
+exports.storeannouce = (req, res) => {
+  const {
+    data } = req.body;
   console.log(data);
-  AnnouncementTitle=data.title,
-  Announcement=data.message,
-  AnonouncerName=data.anonouncerName,
-  ClassId=data.classId,
-  ClassLink=data.URL,
-  Time=data.startedTime
-  try{
-    Announcements.create({AnnouncementTitle,
+  AnnouncementTitle = data.title,
+    Announcement = data.message,
+    AnonouncerName = data.anonouncerName,
+    ClassId = data.classId,
+    ClassLink = data.URL,
+    Time = data.startedTime
+  try {
+    Announcements.create({
+      AnnouncementTitle,
       Announcement,
-    AnonouncerName,
-    ClassId,
-    ClassLink,
-      Time});
-  res.send({ status: "ok" });
-  console.log("announcemnet created successfully");
-  }catch(error){
-    res.send({status:"error"});
+      AnonouncerName,
+      ClassId,
+      ClassLink,
+      Time
+    });
+    res.send({ status: "ok" });
+    console.log("announcemnet created successfully");
+  } catch (error) {
+    res.send({ status: "error" });
     console.log(error);
   }
 }
 
-exports.fetchbook =(req,res)=>{
+exports.fetchbook = (req, res) => {
   // const {username,department} = req.body;
-  Book.find({},(err,data)=>{
-    if (err){
+  Book.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("hellp",data);
+      console.log("hellp", data);
 
     }
-    else{
-      console.log("hellp",data);
+    else {
+      console.log("hellp", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
-exports.fetchQuestion =(req,res)=>{
+exports.fetchQuestion = (req, res) => {
   // const {username,department} = req.body;
-  Questions.find({},(err,data)=>{
-    if (err){
+  Questions.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("The is error in fetching Question",data);
+      console.log("The is error in fetching Question", data);
 
     }
-    else{
-      console.log("The Question are the following",data);
+    else {
+      console.log("The Question are the following", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
-exports.fetchCourse =(req,res)=>{
+exports.fetchCourse = (req, res) => {
   // const {username,department} = req.body;
-  Courses.find({},(err,data)=>{
-    if (err){
+  Courses.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("the is error in fetching courses",data);
+      console.log("the is error in fetching courses", data);
 
     }
-    else{
-      console.log("The courses are the following ",data);
+    else {
+      console.log("The courses are the following ", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
-exports.fetchClass =(req,res)=>{
+exports.fetchClass = (req, res) => {
   // const {username,department} = req.body;
-  Class.find({},(err,data)=>{
-    if (err){
+  Class.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("the is error in fetching Class",data);
+      console.log("the is error in fetching Class", data);
 
     }
-    else{
-      console.log("The class are the following ",data);
+    else {
+      console.log("The class are the following ", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
-exports.fetchTodo =(req,res)=>{
+exports.fetchTodo = (req, res) => {
   // const {username,department} = req.body;
-  Todo.find({},(err,data)=>{
-    if (err){
+  Todo.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("the is error in fetching Todolist",data);
+      console.log("the is error in fetching Todolist", data);
 
     }
-    else{
-      console.log("The Todolist are the following ",data);
+    else {
+      console.log("The Todolist are the following ", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
-exports.fetchAnswer =(req,res)=>{
-  const {data} = req.body;
-  QuestionId= data.QuestionId;
-  Questions.find({ _id: QuestionId },(err,data)=>{
-    if (err){
+exports.fetchAnswer = (req, res) => {
+  const { data } = req.body;
+  QuestionId = data.QuestionId;
+  Questions.find({ _id: QuestionId }, (err, data) => {
+    if (err) {
       res.status(500).send(err);
-      console.log("The is error in fetching Answer",data);
+      console.log("The is error in fetching Answer", data);
 
     }
-    else{
-      console.log("The Answer are the following",data);
+    else {
+      console.log("The Answer are the following", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
 
-exports.fetchAnnouncement =(req,res)=>{
+exports.fetchAnnouncement = (req, res) => {
   // const {username,department} = req.body;
-  Announcements.find({},(err,data)=>{
-    if (err){
+  Announcements.find({}, (err, data) => {
+    if (err) {
       res.status(500).send(err);
       console.log(data);
 
     }
-    else{
+    else {
       console.log(data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
 
 exports.JoinClass = async (req, res) => {
-  const { ClassId,StudentId,StudentName,StudentDept,lectureID } = req.body;
+  const { ClassId, StudentId, StudentName, StudentDept, lectureID } = req.body;
   //   console.log(ClassId,StudentId,StudentName,StudentDept);
-  Class.updateOne({ _id: ClassId }, { $push: { Member: [{StudentId:StudentId,StudentName:StudentName,StudentDept:StudentDept }] } }, (err, doc) => {
+  Class.updateOne({ _id: ClassId }, { $push: { Member: [{ StudentId: StudentId, StudentName: StudentName, StudentDept: StudentDept }] } }, (err, doc) => {
     if (err) return console.log(err);
     User.updateOne({ Id: lectureID }, { $push: { Notification: [{ text: StudentName + " wants to join your class", name: StudentName }] } }, (err, doc) => {
       if (err) return console.log(err);
@@ -799,7 +808,7 @@ exports.Getedirr = (req, res) => {
       res.status(200).send(data);
 
     }
-  }).sort({createdAt: -1})
+  }).sort({ createdAt: -1 })
 
 }
 //   )
@@ -853,7 +862,7 @@ exports.Getedirrname = async (req, res) => {
   const { edirrName } = req.body;
   console.log(edirrName);
   // find({ email: email },
-  Edirs.find( { "NameOfeDirr": edirrName } , (err, data) => {
+  Edirs.find({ "NameOfeDirr": edirrName }, (err, data) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -1266,7 +1275,7 @@ exports.profile = async (req, res) => {
 //   app.post("/payment", 
 exports.payment = async (req, res) => {
   const { email, Amount, edirrName } = req.body;
-  console.log(Amount + email+edirrName);
+  console.log(Amount + email + edirrName);
   const ch = new chapa.Chapa(
     {
       secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF"
@@ -1501,7 +1510,7 @@ exports.Join = async (req, res) => {
 // // }
 
 //   // console.log(users[);
- 
+
 
 
 
@@ -1511,26 +1520,26 @@ exports.Accept1 = async (req, res) => {
   const { email, edirr, Creator } = req.body;
   console.log("acccept111");
   console.log(Creator);
-   const paymentNotification =await Edirs.find({"Members.Email": email});
-  
+  const paymentNotification = await Edirs.find({ "Members.Email": email });
+
   Edirs.updateOne({ NameOfeDirr: edirr }, { $push: { Members: { Email: email, Payment: "Not Payed" } } }, (err, doc) => {
     if (err) return console.log(err);
     // User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
-      //  
-      paymentNotification.forEach((PN)=>{   
-        console.log("payment notification",PN.NameOfeDirr,PN.Amount);
-    User.updateOne({ email: email }, { $push: { Notification: [{ text: "you have joined please pay your inital payemnt to procced " , edirr:PN.NameOfeDirr,type:"iPayment",Payment:PN.Amount }] } }, (err, doc) => {
-      if (err) return console.log(err);
-      console.log("NOtified")
-    
-      User.updateOne(
-        { email: Creator },
-        { $pull: { Notification: { name: email } } }, (err, doc) => {
-          if (err) return console.log(err);
-          console.log("removed the notification")
-        })
-    });
-  })
+    //  
+    paymentNotification.forEach((PN) => {
+      console.log("payment notification", PN.NameOfeDirr, PN.Amount);
+      User.updateOne({ email: email }, { $push: { Notification: [{ text: "you have joined please pay your inital payemnt to procced ", edirr: PN.NameOfeDirr, type: "iPayment", Payment: PN.Amount }] } }, (err, doc) => {
+        if (err) return console.log(err);
+        console.log("NOtified")
+
+        User.updateOne(
+          { email: Creator },
+          { $pull: { Notification: { name: email } } }, (err, doc) => {
+            if (err) return console.log(err);
+            console.log("removed the notification")
+          })
+      });
+    })
     res.json(doc)
   });
 }
@@ -1591,7 +1600,7 @@ exports.AcceptService = async (req, res) => {
 
   };
   //  Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}},(err,doc)=>{
-    var request = require('request');
+  var request = require('request');
   request(options, function (error, response) {
     if (error) throw new Error(error);
     Edirs.updateOne({ "NameOfeDirr": Edirr, "Request.$[].Email": Email }, { $set: { "Request.$[].Payment": "Payed" } }, (err, doc) => {
