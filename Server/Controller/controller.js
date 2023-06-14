@@ -468,7 +468,7 @@ exports.storeAnswers = (req, res) => {
   var Count = data.Count;
   var QuestionId = data.id;
   try {
-    Questions.updateMany({ "QuestionAsker": "Yonatan" }, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
+    Questions.updateMany({ "QuestionAsker": QuestionId }, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
     // create({Question,QuestionAsker,Department});
     res.send({ status: "ok" });
     console.log("Question created successfully");
