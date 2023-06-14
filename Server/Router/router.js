@@ -26,6 +26,7 @@ route.post('/storeTodo', controller.storeTodo);
 route.post('/storeAnswers', controller.storeAnswers);
 route.post('/storeannouce',controller.storeannouce);
 route.get('/fetchclass', controller.fetchClass);
+route.get('/fetchUsers', controller.fetchUsers);
 route.post('/fetchAnswer', controller.fetchAnswer);
 route.get('/fetchQuestion', controller.fetchQuestion);
 route.get('/fetchbook', controller.fetchbook);

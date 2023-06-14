@@ -432,11 +432,12 @@ exports.storeTodo = (req, res) => {
 
 
 exports.storebook = (req, res) => {
-  const { BookName,
-    BookAuthor,
-    BookYear,
-    BookDepratment } = req.body;
-  try {
+  const { data } = req.body;
+ var  BookName=data.BookName;
+    var BookAuthor=data.BookAuthor;
+    var BookYear=data.BookYear;
+    var BookDepratment=data.BookDepratmen;  
+    try {
     Book.create({ BookName, BookAuthor, BookYear, BookDepratment });
     res.send({ status: "ok" });
     console.log("Book created successfully");
@@ -447,9 +448,10 @@ exports.storebook = (req, res) => {
 }
 
 exports.storeQuestion = (req, res) => {
-  const { Question,
-    QuestionAsker,
-    Department, } = req.body;
+  const { data } = req.body;
+  var Question=data.questions;
+    var QuestionAsker=data.Username;
+   var Department=data.department;
   try {
     Questions.create({ Question, QuestionAsker, Department });
     res.send({ status: "ok" });
@@ -561,6 +563,22 @@ exports.fetchbook = (req, res) => {
     }
     else {
       console.log("hellp", data);
+      res.status(200).send(data);
+    }
+
+  }).sort({createdAt: -1})
+
+}
+exports.fetchUsers = (req, res) => {
+  // const {username,department} = req.body;
+  User.find({}, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+      console.log("hellp", data);
+
+    }
+    else {
+      console.log("hello", data);
       res.status(200).send(data);
     }
 
