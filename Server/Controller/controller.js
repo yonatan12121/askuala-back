@@ -462,8 +462,11 @@ exports.storeQuestion = (req, res) => {
   }
 }
 exports.storeAnswers = (req, res) => {
-  const { Answer, Name, Count, QuestionId } = req.body;
-
+  const { data } = req.body;
+  var Answer = data.answer;
+  var Name = data.Username;
+  var Count = data.Count;
+  var QuestionId = data.id;
   try {
     Questions.updateMany({ "QuestionAsker": "Yonatan" }, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
     // create({Question,QuestionAsker,Department});
@@ -713,6 +716,26 @@ exports.JoinClass = async (req, res) => {
 
 }
 
+exports.removeUser = async (req, res) => {
+  const { id, email } = req.body;
+  console.log(id);
+  console.log(email);
+  try {
+    // Find the user by ID and remove them
+    const result = await User.findByIdAndRemove(id);
+
+    if (result) {
+      console.log('User removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('User not found');
+    }
+  } catch (error) {
+    console.error('Error removing user:', error);
+    res.status(500).send(error);
+  }
+ 
+}
 
 
 

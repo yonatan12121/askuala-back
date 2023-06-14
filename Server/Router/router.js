@@ -34,6 +34,7 @@ route.get('/fetchCourse', controller.fetchCourse);
 route.get('/fetchTodo', controller.fetchTodo);
 route.get('/fetchAnnouncement', controller.fetchAnnouncement);
 route.post('/JoinClass', controller.JoinClass);
+route.post('/removeUser', controller.removeUser);
 route.post('/CreateEdir', controller.CreateEdir);
 route.post('/GetReqnot', controller.GetReqnot);
 route.post('/Getmemb', controller.Getmemb);
