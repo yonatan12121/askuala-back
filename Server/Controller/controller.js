@@ -462,14 +462,11 @@ exports.storeQuestion = (req, res) => {
   }
 }
 exports.storeAnswers = (req, res) => {
-  const { Answer,
-    Name,
-    Count,
-    QuestionId } = req.body;
-  // var Answer = data.answer;
-  // var Name = data.Username;
-  // var Count = data.Count;
-  // var QuestionId = data.id;
+  const { data} = req.body;
+  var Answer = data.answer;
+  var Name = data.Username;
+  var Count = "0";
+  var QuestionId = data.id;
   console.log(Answer,
     Name,
     Count,
