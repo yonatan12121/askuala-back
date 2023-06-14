@@ -462,20 +462,35 @@ exports.storeQuestion = (req, res) => {
   }
 }
 exports.storeAnswers = (req, res) => {
-  const { data } = req.body;
-  var Answer = data.answer;
-  var Name = data.Username;
-  var Count = data.Count;
-  var QuestionId = data.id;
-  try {
-    Questions.updateMany({ "QuestionAsker": QuestionId }, { $set: { Answer: { Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId } } })
-    // create({Question,QuestionAsker,Department});
-    res.send({ status: "ok" });
-    console.log("Question created successfully");
-  } catch (error) {
-    res.send({ status: "error" });
-    console.log(error);
-  }
+  const { Answer,
+    Name,
+    Count,
+    QuestionId } = req.body;
+  // var Answer = data.answer;
+  // var Name = data.Username;
+  // var Count = data.Count;
+  // var QuestionId = data.id;
+  console.log(Answer,
+    Name,
+    Count,
+    QuestionId);
+
+    Questions.updateOne({ _id: QuestionId }, { $push: { Answer: [{ Answer:Answer,Name:Name,QuestionId,QuestionId }] } }, (err, doc) => {
+      if (err) return console.log(err);
+      console.log("NOtified");
+
+     
+    });
+    
+  // try {
+  //   Questions.updateMany({ "Department": "Cs" }, { $push: { Answer: [{ Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId }] } })
+  //   // create({Question,QuestionAsker,Department});
+  //   res.send({ status: "ok" });
+  //   console.log("Question created successfully");
+  // } catch (error) {
+  //   res.send({ status: "error" });
+  //   console.log(error);
+  // }
 }
 // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
 //   if (err) return console.log(err);
