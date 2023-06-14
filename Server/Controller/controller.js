@@ -681,21 +681,20 @@ exports.fetchTodo = (req, res) => {
 
 
 exports.fetchAnswer = (req, res) => {
-  const { data } = req.body;
-  QuestionId = data.QuestionId;
+  const { QuestionId } = req.body;
+  // QuestionId = data.QuestionId;
   Questions.find({ _id: QuestionId }, (err, data) => {
     if (err) {
       res.status(500).send(err);
-      console.log("The is error in fetching Answer", data);
+      console.log("The is error in fetching Answer", err);
 
     }
     else {
-      console.log("The Answer are the following", data);
+      console.log("The Answer are the following", data[0].Answer);
       res.status(200).send(data);
     }
 
-  }).sort({createdAt: -1})
-
+  })
 }
 
 
@@ -720,7 +719,12 @@ exports.fetchAnnouncement = (req, res) => {
 
 
 exports.JoinClass = async (req, res) => {
-  const { ClassId, StudentId, StudentName, StudentDept, lectureID } = req.body;
+  const { data} = req.body;
+  var ClassId= data.CourseId;
+  var StudentId= data.id;
+  var StudentName= data.Username;
+  var StudentDept= data.department;
+  var lectureID= data.lectureID ;
   //   console.log(ClassId,StudentId,StudentName,StudentDept);
   Class.updateOne({ _id: ClassId }, { $push: { Member: [{ StudentId: StudentId, StudentName: StudentName, StudentDept: StudentDept }] } }, (err, doc) => {
     if (err) return console.log(err);
