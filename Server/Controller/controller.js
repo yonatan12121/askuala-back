@@ -681,20 +681,21 @@ exports.fetchTodo = (req, res) => {
 
 
 exports.fetchAnswer = (req, res) => {
-  const { QuestionId } = req.body;
-  // QuestionId = data.QuestionId;
+  const { data } = req.body;
+  QuestionId = data.QuestionId;
   Questions.find({ _id: QuestionId }, (err, data) => {
     if (err) {
       res.status(500).send(err);
-      console.log("The is error in fetching Answer", err);
+      console.log("The is error in fetching Answer", data);
 
     }
     else {
-      console.log("The Answer are the following", data[0].Answer);
+      console.log("The Answer are the following", data);
       res.status(200).send(data);
     }
 
-  })
+  }).sort({createdAt: -1})
+
 }
 
 
