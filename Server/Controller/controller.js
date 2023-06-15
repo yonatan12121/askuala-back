@@ -357,45 +357,27 @@ exports.loginUser = async (req, res) => {
   const { data } = req.body;
   var Id = data.email;
   var password = data.password;
-  console.log(req.body);
-  console.log("emaillll", 0);
   const user = await User.findOne({ Id });
-  console.log(user);
   if (!user) {
     return res.json({ error: "User Not found" });
   }
   if (await bcrypt.compare(password, user.password)) {
-    console.log("the user is found", password);
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
       expiresIn: "15m",
     });
 
-    // console.log( info.Emergencyaddress);
-    var check;
-    if (user.verified == false) {
-      check = "notVerified";
-    } else {
-      check = "Verified";
-    }
-    //  else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
-    //     check = "notDone";
-    //   } else {
-    //     check = "Done";
-    //   }
-
     if (res.status(201)) {
       const id = user.Id;
       const password = user.password;
-      // console.log(email);
       const role = user.role;
       const fullName = user.fullName;
       const department = user.department;
       const gender = user.gender;
       if (role == "Student") {
-        console.log(check);
+        console.log("check");
         return res.json({
           status: "ok",
-          role: "student",
+          role,
           id,
           password,
           fullName,
@@ -403,8 +385,8 @@ exports.loginUser = async (req, res) => {
           data: token,
         });
       }
-      if (role == "admin") {
-        return res.json({ status: "ok", role: "admin", data: token });
+      if (role == "Admin") {
+        return res.json({ status: "ok", role, data: token });
       }
     } else {
       return res.json({ error: "error" });
@@ -412,11 +394,7 @@ exports.loginUser = async (req, res) => {
   }
   res.json({ status: "error", error: "InvAlid Password" });
 };
-//   );
 
-//   app.patch("/update", async (req, res) => {
-
-//   });
 
 exports.storeTodo = (req, res) => {
   const { data } = req.body;
