@@ -513,7 +513,7 @@ exports.storeAnswers = (req, res) => {
 exports.storecourse = (req, res) => {
   const {
     data } = req.body;
-  CourseId = data.courseId,
+    CourseId = data.courseId,
     CourseName = data.courseName,
     Ects = data.ETCS,
     CreaditHour = data.creaditHours,
@@ -551,6 +551,24 @@ exports.storeClass = (req, res) => {
     console.log(error);
   }
 }
+
+
+exports.storeMaterials = (req, res) => {
+  const {
+    data
+  } = req.body;
+  CourseId = data.courseId;
+  
+  try {
+    Class.create({ CourseId});
+    res.send({ status: "ok" });
+    console.log("Class created successfully");
+  } catch (error) {
+    res.send({ status: "error" });
+    console.log(error);
+  }
+}
+
 exports.storeannouce = (req, res) => {
   const {
     data } = req.body;
@@ -736,6 +754,26 @@ exports.JoinClass = async (req, res) => {
       if (err) return console.log(err);
       console.log("NOtified")
     });
+    res.json(doc)
+
+  });
+
+
+
+}
+
+
+
+
+exports.storeMaterials = async (req, res) => {
+  const { data} = req.body;
+  var ClassId= data.ClassId;
+  var Title= data.title;
+  
+  //   console.log(ClassId,StudentId,StudentName,StudentDept);
+  Class.updateOne({ _id: ClassId }, { $push: { Material: [{ Title:Title,ClassId:ClassId }] } }, (err, doc) => {
+    if (err) return console.log(err);
+    
     res.json(doc)
 
   });
