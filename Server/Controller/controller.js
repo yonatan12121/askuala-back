@@ -839,8 +839,9 @@ exports.removeClass = async (req, res) => {
 };
 
 exports.removeCourse = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Courses.findByIdAndRemove(id);
@@ -858,8 +859,9 @@ exports.removeCourse = async (req, res) => {
 };
 
 exports.removeAnnouncement = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Announcements.findByIdAndRemove(id);
@@ -877,8 +879,9 @@ exports.removeAnnouncement = async (req, res) => {
 };
 
 exports.removeQA = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Questions.findByIdAndRemove(id);
