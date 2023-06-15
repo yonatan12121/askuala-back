@@ -807,8 +807,9 @@ exports.removeUser = async (req, res) => {
 
 
 exports.removeTodo = async (req, res) => {
-  const { id,  } = req.body;
-  console.log(id);
+  const { data  } = req.body;
+  console.log(data);
+  var id =data.data;
   try {
     // Find the user by ID and remove them
     const result = await Todo.findByIdAndRemove(id);
