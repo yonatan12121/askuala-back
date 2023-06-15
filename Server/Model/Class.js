@@ -7,6 +7,14 @@ const MemberScehma = new mongoose.Schema(
     },{timestamps:true},
   )
 
+
+  const MaterialScehma = new mongoose.Schema(
+    {
+      ClassId:String,
+      Title:String
+    },{timestamps:true},
+  )
+
 const ClassSchema = new mongoose.Schema({
     
     CourseId:String,
@@ -14,6 +22,7 @@ const ClassSchema = new mongoose.Schema({
     Ects:String,
     CreaditHour:String,
     Member:[MemberScehma],
+    Material:[MaterialScehma],
     lectureID:String,
     courseDept:String,
     StartDay:String,
