@@ -1,28 +1,27 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 app.use(express.json());
-const chapa = require('chapa-nodejs');
+const chapa = require("chapa-nodejs");
 const bcrypt = require("bcryptjs");
-
 
 const cors = require("cors");
 app.use(cors());
-var User = require('../Model/UserModel');
-var Admin = require('../Model/AdminModel');
-var Book = require('../Model/Book');
-var Announcements = require('../Model/Announcement');
-var Todo = require('../Model/Todo');
-var Courses = require('../Model/Course');
-var Class = require('../Model/Class');
-var Questions = require('../Model/Question');
+var User = require("../Model/UserModel");
+var Admin = require("../Model/AdminModel");
+var Book = require("../Model/Book");
+var Announcements = require("../Model/Announcement");
+var Todo = require("../Model/Todo");
+var Courses = require("../Model/Course");
+var Class = require("../Model/Class");
+var Questions = require("../Model/Question");
 
-var Edirs = require('../model/model');
-var UserInfo = require('../model/UserInfoModel');
+var Edirs = require("../model/model");
+var UserInfo = require("../model/UserInfoModel");
 const jwt = require("jsonwebtoken");
-const { Job } = require('node-schedule');
+const { Job } = require("node-schedule");
 
-const JWT_SECRET = "nhjndshnbhsiduy78q3ye3yhrewhriewopfew[fpe-fpe-pf[df[s;f[ds;f[ds;f[ds;f[ds;,fld,s.mdnshbgvcarfdtwygyqgygdhsabjbcnvgawqrr6t8siahjdvdgvds()!@#$%^&*";
-
+const JWT_SECRET =
+  "nhjndshnbhsiduy78q3ye3yhrewhriewopfew[fpe-fpe-pf[df[s;f[ds;f[ds;f[ds;f[ds;,fld,s.mdnshbgvcarfdtwygyqgygdhsabjbcnvgawqrr6t8siahjdvdgvds()!@#$%^&*";
 
 // app.get('/', (req, res) => {
 //     try {
@@ -42,14 +41,14 @@ exports.uploads = async (req, res) => {
   console.log("we are in upload");
   const body = req.body;
   try {
-    const newImage = await Post.create(body)
+    const newImage = await Post.create(body);
     newImage.save();
-    res.status(201).json({ msg: "New image uploaded...!" })
+    res.status(201).json({ msg: "New image uploaded...!" });
   } catch (error) {
-    res.status(409).json({ message: error.message })
+    res.status(409).json({ message: error.message });
     console.log(error);
   }
-}
+};
 
 //   )
 // app.get("/img",
@@ -58,13 +57,13 @@ exports.img = async (req, res) => {
   Post.find((err, docs) => {
     if (!err) {
       res.render("post", {
-        data: docs
+        data: docs,
       });
     } else {
-      console.log('Failed to retrieve the Course List: ' + err);
+      console.log("Failed to retrieve the Course List: " + err);
     }
   });
-}
+};
 // exports.test=async()=>{
 //   var i;
 // const PaymentDay="11"
@@ -170,17 +169,11 @@ exports.img = async (req, res) => {
 
 //   // console.log(users[);
 
-
-
-
 // }
 
-
-
 exports.runOnceADay = async () => {
-
   var i;
-  const PaymentDay = "11"
+  const PaymentDay = "11";
   // Your code here
   const now = new Date();
   const aa = String(now);
@@ -191,91 +184,104 @@ exports.runOnceADay = async () => {
   // const users= await User.find();
   // console.log(users);
   // console.log(Edir[0].Members[0].Email)
-  var Store = []
+  var Store = [];
   Edir.forEach((eDir) => {
     eDir.Members.forEach((members) => {
-      Store = Store.concat(members.Email)
-    })
-  })
+      Store = Store.concat(members.Email);
+    });
+  });
   // console.log(Store);
 
   Store.forEach(async (eDir) => {
-    const paymentNotification = await Edirs.find({ "Members.Email": eDir, "Members.Payment": "Not Payed", CurrentPaymentDay: curentpayment });
+    const paymentNotification = await Edirs.find({
+      "Members.Email": eDir,
+      "Members.Payment": "Not Payed",
+      CurrentPaymentDay: curentpayment,
+    });
     // console.log(paymentNotification);
     paymentNotification.forEach((PN) => {
-      console.log(PN.NameOfeDirr, now, PN.Amount)
-      User.updateOne({ email: eDir }, { $push: { Notification: [{ text: "Your monthly payment is due ", edirr: PN.NameOfeDirr, type: "mPayment", Date: now, Payment: PN.Amount }] } }, (err, doc) => {
-        if (err) return console.log(err);
-        console.log("NOtified");
-        var next;
-        paymentNotification.forEach((PN) => {
-          console.log(PN.PaymentDuration)
+      console.log(PN.NameOfeDirr, now, PN.Amount);
+      User.updateOne(
+        { email: eDir },
+        {
+          $push: {
+            Notification: [
+              {
+                text: "Your monthly payment is due ",
+                edirr: PN.NameOfeDirr,
+                type: "mPayment",
+                Date: now,
+                Payment: PN.Amount,
+              },
+            ],
+          },
+        },
+        (err, doc) => {
+          if (err) return console.log(err);
+          console.log("NOtified");
+          var next;
+          paymentNotification.forEach((PN) => {
+            console.log(PN.PaymentDuration);
 
-          if (PN.PaymentDuration == 30) {
-            var newpayment = (parseInt(PN.CurrentPaymentDay) + 30)
+            if (PN.PaymentDuration == 30) {
+              var newpayment = parseInt(PN.CurrentPaymentDay) + 30;
 
-            console.log(newpayment);
-            if (newpayment > 30) {
-              next = newpayment - 30
-              console.log(next)
+              console.log(newpayment);
+              if (newpayment > 30) {
+                next = newpayment - 30;
+                console.log(next);
+              } else {
+                next = newpayment;
+              }
+            } else if (PN.PaymentDuration == 7) {
+              console.log("we in 7");
+              var newpayment = parseInt(PN.CurrentPaymentDay) + 7;
 
+              console.log(newpayment);
+              if (newpayment > 30) {
+                next = newpayment - 30;
+                console.log(next);
+              } else {
+                next = newpayment;
+              }
+            } else if (PN.PaymentDuration == 14) {
+              var newpayment = parseInt(PN.CurrentPaymentDay) + 14;
+
+              console.log(newpayment);
+              if (newpayment > 30) {
+                next = newpayment - 30;
+                console.log(next);
+              } else {
+                next = newpayment;
+              }
+            } else if (PN.PaymentDuration == 21) {
+              var newpayment = parseInt(PN.CurrentPaymentDay) + 21;
+
+              console.log(newpayment);
+              if (newpayment > 30) {
+                next = newpayment - 30;
+                console.log(next);
+              } else {
+                next = newpayment;
+              }
             }
-            else {
-              next = newpayment;
-            }
-          }
-          else if (PN.PaymentDuration == 7) {
-            console.log("we in 7");
-            var newpayment = (parseInt(PN.CurrentPaymentDay) + 7)
-
-            console.log(newpayment);
-            if (newpayment > 30) {
-              next = newpayment - 30
-              console.log(next)
-
-            }
-            else {
-              next = newpayment;
-            }
-          } else if (PN.PaymentDuration == 14) {
-            var newpayment = (parseInt(PN.CurrentPaymentDay) + 14)
-
-            console.log(newpayment);
-            if (newpayment > 30) {
-              next = newpayment - 30
-              console.log(next)
-
-            }
-            else {
-              next = newpayment;
-            }
-          } else if (PN.PaymentDuration == 21) {
-            var newpayment = (parseInt(PN.CurrentPaymentDay) + 21)
-
-            console.log(newpayment);
-            if (newpayment > 30) {
-              next = newpayment - 30
-              console.log(next)
-
-            }
-            else {
-              next = newpayment;
-            }
-          }
-          console.log(next);
-          Edirs.updateOne({ NameOfeDirr: PN.NameOfeDirr }, { $set: { CurrentPaymentDay: next } }, (err, doc) => {
-            if (err) return console.log(err);
-            console.log("current payemnt updated ");
+            console.log(next);
+            Edirs.updateOne(
+              { NameOfeDirr: PN.NameOfeDirr },
+              { $set: { CurrentPaymentDay: next } },
+              (err, doc) => {
+                if (err) return console.log(err);
+                console.log("current payemnt updated ");
+              }
+            );
           });
-
-        })
-
-      });
-    })
-  })
-  // 
+        }
+      );
+    });
+  });
+  //
   // //////////// / /////update the curent payment day by the duration;
-  // 
+  //
   // User.updateOne({email:email},{$push:{Notification:[{text:"you have joined "+ edirr,edirr:edirr}]}},(err,doc)=>{
   //       if (err) return console.log(err);
   //       console.log("NOtified")
@@ -288,13 +294,7 @@ exports.runOnceADay = async () => {
   // }
 
   // console.log(users[);
-
-
-
-
-
-
-}
+};
 //   )
 // app.get("/api/get/payli",
 exports.payli = (req, res) => {
@@ -303,13 +303,10 @@ exports.payli = (req, res) => {
   db.query(sqlGet, (error, result) => {
     res.send(result);
   });
-}
+};
 //   );
 
-
-
-
-//   app.post("/register", 
+//   app.post("/register",
 exports.register = async (req, res) => {
   const { data } = req.body;
   console.log(data);
@@ -339,25 +336,23 @@ exports.register = async (req, res) => {
       password: encreptedPassword,
       role,
 
-      verified: false
+      verified: false,
     });
 
     console.log("success");
     await UserInfo.create({
-      email
+      email,
     });
 
     // this is where email verification is done
-
 
     // upto here verifcation
     res.send({ status: "ok" });
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
-
   }
-}
+};
 exports.loginUser = async (req, res) => {
   const { data } = req.body;
   var Id = data.email;
@@ -379,7 +374,9 @@ exports.loginUser = async (req, res) => {
     var check;
     if (user.verified == false) {
       check = "notVerified";
-    } else { check = "Verified" }
+    } else {
+      check = "Verified";
+    }
     //  else if (info.Emergencyaddress == null && !info.Emergencyaddress) {
     //     check = "notDone";
     //   } else {
@@ -396,8 +393,17 @@ exports.loginUser = async (req, res) => {
       const gender = user.gender;
       if (role == "Student") {
         console.log(check);
-        return res.json({ status: "ok", role: "student", id, password, fullName, department, data: token });
-      } if (role == "admin") {
+        return res.json({
+          status: "ok",
+          role: "student",
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
+      }
+      if (role == "admin") {
         return res.json({ status: "ok", role: "admin", data: token });
       }
     } else {
@@ -405,15 +411,12 @@ exports.loginUser = async (req, res) => {
     }
   }
   res.json({ status: "error", error: "InvAlid Password" });
-}
+};
 //   );
-
 
 //   app.patch("/update", async (req, res) => {
 
-
 //   });
-
 
 exports.storeTodo = (req, res) => {
   const { data } = req.body;
@@ -422,24 +425,22 @@ exports.storeTodo = (req, res) => {
   var studentId = data.data.id;
   console.log(data);
   try {
-    Todo.create({ todo ,studentId});
+    Todo.create({ todo, studentId });
     res.send({ status: "ok" });
     console.log("todolist updated successfully");
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
   }
-}
-
-
+};
 
 exports.storebook = (req, res) => {
   const { data } = req.body;
- var  BookName=data.BookName;
-    var BookAuthor=data.BookAuthor;
-    var BookYear=data.BookYear;
-    var BookDepratment=data.BookDepratmen;  
-    try {
+  var BookName = data.BookName;
+  var BookAuthor = data.BookAuthor;
+  var BookYear = data.BookYear;
+  var BookDepratment = data.BookDepratmen;
+  try {
     Book.create({ BookName, BookAuthor, BookYear, BookDepratment });
     res.send({ status: "ok" });
     console.log("Book created successfully");
@@ -447,13 +448,13 @@ exports.storebook = (req, res) => {
     res.send({ status: "error" });
     console.log(error);
   }
-}
+};
 
 exports.storeQuestion = (req, res) => {
   const { data } = req.body;
-  var Question=data.questions;
-    var QuestionAsker=data.Username;
-   var Department=data.department;
+  var Question = data.questions;
+  var QuestionAsker = data.Username;
+  var Department = data.department;
   try {
     Questions.create({ Question, QuestionAsker, Department });
     res.send({ status: "ok" });
@@ -462,33 +463,33 @@ exports.storeQuestion = (req, res) => {
     res.send({ status: "error" });
     console.log(error);
   }
-}
+};
 exports.storeAnswers = (req, res) => {
-  const { data} = req.body;
+  const { data } = req.body;
   var Answer = data.answer;
   var Name = data.Username;
   var Count = "0";
   var QuestionId = data.id;
-  console.log(Answer,
-    Name,
-    Count,
-    QuestionId);
+  console.log(Answer, Name, Count, QuestionId);
 
-    Questions.updateOne({ _id: QuestionId }, { $push: { Answer: [{ Answer:Answer,Name:Name,QuestionId,QuestionId }] } }, (err, doc) => {
+  Questions.updateOne(
+    { _id: QuestionId },
+    {
+      $push: {
+        Answer: [{ Answer: Answer, Name: Name, QuestionId, QuestionId }],
+      },
+    },
+    (err, doc) => {
       if (err) {
         res.status(500).send(err);
         console.log("hellp", err);
-  
-      }
-      else {
+      } else {
         console.log("hellp", doc);
         res.status(200).send(doc);
       }
-  
+    }
+  );
 
-     
-    });
-    
   // try {
   //   Questions.updateMany({ "Department": "Cs" }, { $push: { Answer: [{ Answer: Answer, Name: Name, Count: Count, QuestionId: QuestionId }] } })
   //   // create({Question,QuestionAsker,Department});
@@ -498,41 +499,41 @@ exports.storeAnswers = (req, res) => {
   //   res.send({ status: "error" });
   //   console.log(error);
   // }
-}
+};
 // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
 //   if (err) return console.log(err);
 //   console.log("NOtified")
 
-
-
-
-
-
 // });
 
 exports.storecourse = (req, res) => {
-  const {
-    data } = req.body;
-    CourseId = data.courseId,
-    CourseName = data.courseName,
-    Ects = data.ETCS,
-    CreaditHour = data.creaditHours,
-    lectureID = data.teacherId,
-    courseDept = data.courseDept,
-    CourseCreator = data.CourseCreator
+  const { data } = req.body;
+  (CourseId = data.courseId),
+    (CourseName = data.courseName),
+    (Ects = data.ETCS),
+    (CreaditHour = data.creaditHours),
+    (lectureID = data.teacherId),
+    (courseDept = data.courseDept),
+    (CourseCreator = data.CourseCreator);
   try {
-    Courses.create({ CourseId, CourseName, Ects, CreaditHour, lectureID, courseDept, CourseCreator });
+    Courses.create({
+      CourseId,
+      CourseName,
+      Ects,
+      CreaditHour,
+      lectureID,
+      courseDept,
+      CourseCreator,
+    });
     res.send({ status: "ok" });
     console.log("Course created successfully");
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
   }
-}
+};
 exports.storeClass = (req, res) => {
-  const {
-    data
-  } = req.body;
+  const { data } = req.body;
   CourseId = data.courseId;
   CourseName = data.courseName;
   Ects = data.ETCS;
@@ -543,42 +544,48 @@ exports.storeClass = (req, res) => {
   EndDay = data.endDay;
   Description = data.description;
   try {
-    Class.create({ CourseId, CourseName, Ects, CreaditHour, lectureID, courseDept, StartDay, EndDay, Description });
+    Class.create({
+      CourseId,
+      CourseName,
+      Ects,
+      CreaditHour,
+      lectureID,
+      courseDept,
+      StartDay,
+      EndDay,
+      Description,
+    });
     res.send({ status: "ok" });
     console.log("Class created successfully");
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
   }
-}
-
+};
 
 exports.storeMaterials = (req, res) => {
-  const {
-    data
-  } = req.body;
+  const { data } = req.body;
   CourseId = data.courseId;
-  
+
   try {
-    Class.create({ CourseId});
+    Class.create({ CourseId });
     res.send({ status: "ok" });
     console.log("Class created successfully");
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
   }
-}
+};
 
 exports.storeannouce = (req, res) => {
-  const {
-    data } = req.body;
+  const { data } = req.body;
   console.log(data);
-  AnnouncementTitle = data.title,
-    Announcement = data.message,
-    AnonouncerName = data.anonouncerName,
-    ClassId = data.classId,
-    ClassLink = data.URL,
-    Time = data.startedTime
+  (AnnouncementTitle = data.title),
+    (Announcement = data.message),
+    (AnonouncerName = data.anonouncerName),
+    (ClassId = data.classId),
+    (ClassLink = data.URL),
+    (Time = data.startedTime);
   try {
     Announcements.create({
       AnnouncementTitle,
@@ -586,7 +593,7 @@ exports.storeannouce = (req, res) => {
       AnonouncerName,
       ClassId,
       ClassLink,
-      Time
+      Time,
     });
     res.send({ status: "ok" });
     console.log("announcemnet created successfully");
@@ -594,7 +601,7 @@ exports.storeannouce = (req, res) => {
     res.send({ status: "error" });
     console.log(error);
   }
-}
+};
 
 exports.fetchbook = (req, res) => {
   // const {username,department} = req.body;
@@ -602,16 +609,12 @@ exports.fetchbook = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("hellp", data);
-
-    }
-    else {
+    } else {
       console.log("hellp", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
+  }).sort({ createdAt: -1 });
+};
 exports.fetchUsers = (req, res) => {
   // const {username,department} = req.body;
   console.log("fetch");
@@ -619,16 +622,12 @@ exports.fetchUsers = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("hellp", data);
-
-    }
-    else {
+    } else {
       console.log("hello", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchQuestion = (req, res) => {
   // const {username,department} = req.body;
@@ -636,16 +635,12 @@ exports.fetchQuestion = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("The is error in fetching Question", data);
-
-    }
-    else {
+    } else {
       console.log("The Question are the following", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchCourse = (req, res) => {
   // const {username,department} = req.body;
@@ -653,17 +648,12 @@ exports.fetchCourse = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("the is error in fetching courses", data);
-
-    }
-    else {
+    } else {
       console.log("The courses are the following ", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
-
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchClass = (req, res) => {
   // const {username,department} = req.body;
@@ -671,17 +661,12 @@ exports.fetchClass = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("the is error in fetching Class", data);
-
-    }
-    else {
+    } else {
       console.log("The class are the following ", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
-
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchTodo = (req, res) => {
   // const {username,department} = req.body;
@@ -689,17 +674,12 @@ exports.fetchTodo = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("the is error in fetching Todolist", data);
-
-    }
-    else {
+    } else {
       console.log("The Todolist are the following ", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
-
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchAnswer = (req, res) => {
   const { data } = req.body;
@@ -708,18 +688,12 @@ exports.fetchAnswer = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log("The is error in fetching Answer", data);
-
-    }
-    else {
+    } else {
       console.log("The Answer are the following", data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
-
-
+  }).sort({ createdAt: -1 });
+};
 
 exports.fetchAnnouncement = (req, res) => {
   // const {username,department} = req.body;
@@ -727,201 +701,203 @@ exports.fetchAnnouncement = (req, res) => {
     if (err) {
       res.status(500).send(err);
       console.log(data);
-
-    }
-    else {
+    } else {
       console.log(data);
       res.status(200).send(data);
     }
-
-  }).sort({createdAt: -1})
-
-}
-
-
+  }).sort({ createdAt: -1 });
+};
 
 exports.JoinClass = async (req, res) => {
-  const { data} = req.body;
-  var ClassId= data._id;
-  var StudentId= data.id;
-  var StudentName= data.Username;
-  var StudentDept= data.department;
-  var lectureID= data.lectureID ;
+  const { data } = req.body;
+  var ClassId = data._id;
+  var StudentId = data.id;
+  var StudentName = data.Username;
+  var StudentDept = data.department;
+  var lectureID = data.lectureID;
   //   console.log(ClassId,StudentId,StudentName,StudentDept);
-  Class.updateOne({ _id: ClassId }, { $push: { Member: [{ StudentId: StudentId, StudentName: StudentName, StudentDept: StudentDept }] } }, (err, doc) => {
-    if (err) return console.log(err);
-    User.updateOne({ Id: lectureID }, { $push: { Notification: [{ text: StudentName + " wants to join your class", name: StudentName }] } }, (err, doc) => {
+  Class.updateOne(
+    { _id: ClassId },
+    {
+      $push: {
+        Member: [
+          {
+            StudentId: StudentId,
+            StudentName: StudentName,
+            StudentDept: StudentDept,
+          },
+        ],
+      },
+    },
+    (err, doc) => {
       if (err) return console.log(err);
-      console.log("NOtified")
-    });
-    res.json(doc)
-
-  });
-
-
-
-}
-
-
-
+      User.updateOne(
+        { Id: lectureID },
+        {
+          $push: {
+            Notification: [
+              {
+                text: StudentName + " wants to join your class",
+                name: StudentName,
+              },
+            ],
+          },
+        },
+        (err, doc) => {
+          if (err) return console.log(err);
+          console.log("NOtified");
+        }
+      );
+      res.json(doc);
+    }
+  );
+};
 
 exports.storeMaterials = async (req, res) => {
-  const { data} = req.body;
+  const { data } = req.body;
   console.log(data);
-  var ClassId= data.Classid;
-  var Title= data.title;
-  
+  var ClassId = data.Classid;
+  var Title = data.title;
+
   //   console.log(ClassId,StudentId,StudentName,StudentDept);
-  Class.updateOne({ _id: ClassId }, { $push: { Material: [{ Title:Title,ClassId:ClassId }] } }, (err, doc) => {
-    if (err) return console.log(err);
-    
-    res.json(doc)
+  Class.updateOne(
+    { _id: ClassId },
+    { $push: { Material: [{ Title: Title, ClassId: ClassId }] } },
+    (err, doc) => {
+      if (err) return console.log(err);
 
-  });
-
-
-
-}
+      res.json(doc);
+    }
+  );
+};
 
 exports.removeUser = async (req, res) => {
   const { data } = req.body;
-  var id = data.data
+  var id = data.data;
   console.log(data);
   try {
     // Find the user by ID and remove them
     const result = await User.findByIdAndRemove(id);
 
     if (result) {
-      console.log('User removed successfully:', result);
+      console.log("User removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('User not found');
+      console.log("User not found");
     }
   } catch (error) {
-    console.error('Error removing user:', error);
+    console.error("Error removing user:", error);
     res.status(500).send(error);
   }
- 
-}
-
-
-
+};
 
 exports.removeTodo = async (req, res) => {
-  const { data  } = req.body;
+  const { data } = req.body;
   console.log(data);
-  var id =data.data;
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Todo.findByIdAndRemove(id);
 
     if (result) {
-      console.log('Todo removed successfully:', result);
+      console.log("Todo removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('todo not found');
+      console.log("todo not found");
     }
   } catch (error) {
-    console.error('Error removing todo:', error);
+    console.error("Error removing todo:", error);
     res.status(500).send(error);
   }
- 
-}
-
+};
 
 exports.removeClass = async (req, res) => {
-  const { id,  } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Class.findByIdAndRemove(id);
 
     if (result) {
-      console.log('class removed successfully:', result);
+      console.log("class removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('class not found');
+      console.log("class not found");
     }
   } catch (error) {
-    console.error('Error removing todo:', error);
+    console.error("Error removing todo:", error);
     res.status(500).send(error);
   }
- 
-}
+};
 
 exports.removeCourse = async (req, res) => {
-  const { id,  } = req.body;
+  const { id } = req.body;
   console.log(id);
   try {
     // Find the user by ID and remove them
     const result = await Courses.findByIdAndRemove(id);
 
     if (result) {
-      console.log('Courses removed successfully:', result);
+      console.log("Courses removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('Courses not found');
+      console.log("Courses not found");
     }
   } catch (error) {
-    console.error('Error removing Courses:', error);
+    console.error("Error removing Courses:", error);
     res.status(500).send(error);
   }
- 
-}
+};
 
 exports.removeAnnouncement = async (req, res) => {
-  const { id,  } = req.body;
+  const { id } = req.body;
   console.log(id);
   try {
     // Find the user by ID and remove them
     const result = await Announcements.findByIdAndRemove(id);
 
     if (result) {
-      console.log('Announcement removed successfully:', result);
+      console.log("Announcement removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('Announcement not found');
+      console.log("Announcement not found");
     }
   } catch (error) {
-    console.error('Error removing Announcement:', error);
+    console.error("Error removing Announcement:", error);
     res.status(500).send(error);
   }
- 
-}
-
+};
 
 exports.removeQA = async (req, res) => {
-  const { id} = req.body;
+  const { id } = req.body;
   console.log(id);
   try {
     // Find the user by ID and remove them
     const result = await Questions.findByIdAndRemove(id);
 
     if (result) {
-      console.log('Questions removed successfully:', result);
+      console.log("Questions removed successfully:", result);
       res.status(200).send(result);
     } else {
-      console.log('Questions not found');
+      console.log("Questions not found");
     }
   } catch (error) {
-    console.error('Error removing Questions:', error);
+    console.error("Error removing Questions:", error);
     res.status(500).send(error);
   }
- 
-}
-
-
+};
 
 exports.verified = (req, res) => {
   const { email } = req.body;
   console.log("verifying");
-  User.updateOne({ "email": email }, { $set: { verified: true } }, (err, doc) => {
+  User.updateOne({ email: email }, { $set: { verified: true } }, (err, doc) => {
     if (err) return console.log(err);
     return res.json({ doc });
-  })
-}
+  });
+};
 
-//   app.post("/CreateEdir", 
+//   app.post("/CreateEdir",
 
 exports.CreateEdir = async (req, res) => {
   const {
@@ -937,7 +913,6 @@ exports.CreateEdir = async (req, res) => {
     Creator,
   } = req.body;
 
-
   console.log("eDirr created ");
 
   try {
@@ -952,32 +927,33 @@ exports.CreateEdir = async (req, res) => {
       PaymentDay,
       Description,
       Creator,
-    })
-    Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{ text: Creator + "have created " + NameOfeDirr, Creator: Creator, edirr: NameOfeDirr }] } }, (err, doc) => {
-      if (err) return console.log(err);
-      console.log("NOtified")
-
-
-
-
-
-
     });
+    Admin.updateOne(
+      { _id: "641b09fbc5dd296cf1c700a7" },
+      {
+        $push: {
+          Notification: [
+            {
+              text: Creator + "have created " + NameOfeDirr,
+              Creator: Creator,
+              edirr: NameOfeDirr,
+            },
+          ],
+        },
+      },
+      (err, doc) => {
+        if (err) return console.log(err);
+        console.log("NOtified");
+      }
+    );
     res.send({ status: "ok" });
     console.log("eDirr created successfully");
-
-
   } catch (error) {
     res.send({ status: "error" });
     console.log(error);
-
   }
-}
+};
 //   );
-
-
-
-
 
 // app.post("/register1", async (req, res) => {
 //   const { userName,fullName,phoneNumber,email,password,cpassword } = req.body;
@@ -987,59 +963,49 @@ exports.CreateEdir = async (req, res) => {
 //     try {
 //         await User.create({
 //           userName,
-//           fullName, 
+//           fullName,
 //           phoneNumber,
 //           email,
 //           password,
 //             role,
-//         });  
+//         });
 //         res.send({ status: "ok" });
 //         console.log("success");
-
 
 //     } catch (error) {
 //         res.send({status: "error" });
 //         console.log("error");
 
-//     } 
+//     }
 // });
 
-
-//   app.get("/Getedirr", 
+//   app.get("/Getedirr",
 exports.Getedirr = (req, res) => {
   console.log("ughyugh");
   Edirs.find((err, data) => {
     if (err) {
       res.status(500).send(err);
-    }
-    else {
-
-      console.log(data)
+    } else {
+      console.log(data);
       res.status(200).send(data);
-
     }
-  }).sort({ createdAt: -1 })
-
-}
+  }).sort({ createdAt: -1 });
+};
 //   )
 //   app.get("/Getuser",
 exports.Getuser = async (req, res) => {
   UserInfo.find((err, data) => {
     if (err) {
       res.status(500).send(err);
-    }
-    else {
+    } else {
       console.log(data.length);
       res.status(200).send(data);
-
-
     }
-  })
-
-}
+  });
+};
 //   )
 
-// Edirs.find({Members:[{Email:email}]}, 
+// Edirs.find({Members:[{Email:email}]},
 // Edirs.find({Members:[{Email:email}]},{$push:{Members:[{Email:email}]}},(err,doc)=>{
 //   if (err) return console.log(err);
 //   User.updateOne({email:email},{$push:{Notification:[{text:"you have joined "+ edirr,edirr:edirr}]}},(err,doc)=>{
@@ -1050,42 +1016,33 @@ exports.Getuser = async (req, res) => {
 
 // });
 
-
 // ({Members:{$elemMatch: {"Email":email}}}
-//   app.post("/Getedirrho", 
+//   app.post("/Getedirrho",
 exports.Getedirrho = async (req, res) => {
   const { email } = req.body;
   console.log(email);
-  Edirs.find({ Members: { $elemMatch: { "Email": email } } }, (err, data) => {
+  Edirs.find({ Members: { $elemMatch: { Email: email } } }, (err, data) => {
     if (err) {
       res.status(500).send(err);
-    }
-    else {
+    } else {
       res.status(200).send(data);
-
-
     }
-  })
-
-}
+  });
+};
 exports.Getedirrname = async (req, res) => {
   const { edirrName } = req.body;
   console.log(edirrName);
   // find({ email: email },
-  Edirs.find({ "NameOfeDirr": edirrName }, (err, data) => {
+  Edirs.find({ NameOfeDirr: edirrName }, (err, data) => {
     if (err) {
       res.status(500).send(err);
-    }
-    else {
+    } else {
       // console.log(data);
       res.status(200).send(data);
-
-
     }
-  })
-
-}
-// app.get("/api/forgot-password", 
+  });
+};
+// app.get("/api/forgot-password",
 exports.forgotPassword = async (req, res) => {
   var email = req.query.email;
   const user = await User.findOne({ email });
@@ -1106,7 +1063,8 @@ exports.forgotPassword = async (req, res) => {
   console.log("hello", req.query.email);
   if (req.query.email) {
     console.log(req.query.email);
-    const forgotPasswordToken = jwt.sign({},
+    const forgotPasswordToken = jwt.sign(
+      {},
       { userEmail: req.query.email },
       "Wintu-Yoni@2022",
       {
@@ -1164,38 +1122,39 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-
 exports.LeaveEdirr = async (req, res) => {
   const { id, email } = req.body;
   console.log(id);
   console.log(email);
-  Edirs.updateOne({ _id: id }, { $pull: { Members: { Email: email } } }, (err, doc) => {
-    // if (err) return console.log(err);
-    if (err) {
-      res.status(500).send(err);
+  Edirs.updateOne(
+    { _id: id },
+    { $pull: { Members: { Email: email } } },
+    (err, doc) => {
+      // if (err) return console.log(err);
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(doc);
+      }
     }
-    else {
-
-      res.status(200).send(doc);
-
-
-    }
-  })
-
-}
+  );
+};
 
 exports.ResetPassword = async (req, res) => {
   const { newPassword, email } = req.body;
   console.log(newPassword, email);
   // Edirs.updateOne({ "NameOfeDirr": edirrName }, { $set: { "Members.$[].Payment": "Payed" } }, (err, doc) => {
   const encreptedPassword = await bcrypt.hash(newPassword, 10);
-  User.updateOne({ "email": email }, { $set: { password: encreptedPassword } }, (err, doc) => {
-    if (err) return console.log(err);
-    return res.json({ doc });
-  })
+  User.updateOne(
+    { email: email },
+    { $set: { password: encreptedPassword } },
+    (err, doc) => {
+      if (err) return console.log(err);
+      return res.json({ doc });
+    }
+  );
   // $elemMatch: { "Creator": email }
-}
-
+};
 
 exports.Report = async (req, res) => {
   console.log("reporting");
@@ -1206,30 +1165,33 @@ exports.Report = async (req, res) => {
   const today = bb.join();
   console.log(edirrName, id, UserName, Report, today);
   // console.log(email);
-  Admin.updateOne({ $push: { Report: { EdirName: edirrName, EdirrId: id, UserName: UserName, Report: Report, Date: today, } } }, (err, doc) => {
-    if (err) {
-      res.status(500).send(err);
+  Admin.updateOne(
+    {
+      $push: {
+        Report: {
+          EdirName: edirrName,
+          EdirrId: id,
+          UserName: UserName,
+          Report: Report,
+          Date: today,
+        },
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(doc);
+      }
+      // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{   text: Creator+"have created " + NameOfeDirr, Creator:Creator,edirr: NameOfeDirr }] } }, (err, doc) => {
+      //   if (err) return console.log(err);
+      //   console.log("NOtified")
+
+      // });
+      // if (err) return console.log(err);
     }
-    else {
-
-      res.status(200).send(doc);
-
-
-    }
-    // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{   text: Creator+"have created " + NameOfeDirr, Creator:Creator,edirr: NameOfeDirr }] } }, (err, doc) => {
-    //   if (err) return console.log(err);
-    //   console.log("NOtified")
-
-
-
-
-
-
-    // });
-    // if (err) return console.log(err);
-
-  })
-}
+  );
+};
 
 exports.Contact = async (req, res) => {
   console.log("reporting");
@@ -1240,99 +1202,86 @@ exports.Contact = async (req, res) => {
   const today = bb.join();
   console.log(Email, subject, message, today);
   // console.log(email);
-  Admin.updateOne({ $push: { Contact: { Email: Email, Subject: subject, Message: message, Date: today, } } }, (err, doc) => {
-    if (err) {
-      res.status(500).send(err);
+  Admin.updateOne(
+    {
+      $push: {
+        Contact: {
+          Email: Email,
+          Subject: subject,
+          Message: message,
+          Date: today,
+        },
+      },
+    },
+    (err, doc) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(200).send(doc);
+      }
+      // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{   text: Creator+"have created " + NameOfeDirr, Creator:Creator,edirr: NameOfeDirr }] } }, (err, doc) => {
+      //   if (err) return console.log(err);
+      //   console.log("NOtified")
+
+      // });
+      // if (err) return console.log(err);
     }
-    else {
-
-      res.status(200).send(doc);
-
-
-    }
-    // Admin.updateOne({ _id: "641b09fbc5dd296cf1c700a7" }, { $push: { Notification: [{   text: Creator+"have created " + NameOfeDirr, Creator:Creator,edirr: NameOfeDirr }] } }, (err, doc) => {
-    //   if (err) return console.log(err);
-    //   console.log("NOtified")
-
-
-
-
-
-
-    // });
-    // if (err) return console.log(err);
-
-  })
-}
-
+  );
+};
 
 //   )
 
-
-
-
-
-
-
-//   app.post("/Getnot", 
+//   app.post("/Getnot",
 exports.Getnot = async (req, res) => {
   const { email } = req.body;
   console.log(email);
-  User.find({ email: email }, 'Notification',
+  User.find(
+    { email: email },
+    "Notification",
 
     (err, data) => {
       if (err) {
         res.status(500).send(err);
-      }
-      else {
+      } else {
         res.status(200).send(data);
-
-
       }
-    })
-
-}
+    }
+  );
+};
 //   )
 
-//   app.get("/GetAdminnot", 
+//   app.get("/GetAdminnot",
 exports.GetAdminnot = async (req, res) => {
   // const { email } = req.body;
   // console.log(email);
-  Admin.find({ _id: "641b09fbc5dd296cf1c700a7" }, 'Notification',
+  Admin.find(
+    { _id: "641b09fbc5dd296cf1c700a7" },
+    "Notification",
 
     (err, data) => {
       if (err) {
         res.status(500).send(err);
-      }
-      else {
+      } else {
         console.log(data);
         res.status(200).send(data);
-
-
       }
-    })
-
-}
+    }
+  );
+};
 //   )
 
 //   app.post("/GetReqnot",
 exports.GetReqnot = async (req, res) => {
   const { email } = req.body;
   console.log(email);
-  const u = Edirs.find({ $elemMatch: { "Creator": email } })
-  Edirs.find({ Creator: email },
-    (err, data) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      else {
-        res.status(200).send(data);
-
-
-      }
+  const u = Edirs.find({ $elemMatch: { Creator: email } });
+  Edirs.find({ Creator: email }, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
     }
-
-  )
+  });
   // const users = await Edirs.findOne({"Creator":email});
   // console.log(u);
   // Edirs.find({Creator:email}, 'Request',
@@ -1344,44 +1293,31 @@ exports.GetReqnot = async (req, res) => {
   //   else{
   //     res.status(200).send(data);
 
-
   //   }
   // })
-
-}
+};
 //   )
 
-
-
-
-//   app.post("/Getmemb", 
+//   app.post("/Getmemb",
 exports.Getmemb = async (req, res) => {
   const { email, edirrName } = req.body;
   console.log(edirrName);
-  Edirs.findOne({ NameOfeDirr: edirrName }, 'Members',
+  Edirs.findOne(
+    { NameOfeDirr: edirrName },
+    "Members",
 
     (err, data) => {
       if (err) {
         res.status(500).send(err);
-      }
-      else {
+      } else {
         res.status(200).send(data);
-
-
       }
-    })
-
-}
+    }
+  );
+};
 //   )
 
-
-
-
-
-
-
-
-//   app.post("/Getedirr", 
+//   app.post("/Getedirr",
 exports.Getedirrs = async (req, res) => {
   const eDirr = await Edirs.findOne({});
   var NameOfeDirr = eDirr.NameOfeDirr;
@@ -1394,7 +1330,8 @@ exports.Getedirrs = async (req, res) => {
   var Description = eDirr.Description;
   var Creator = eDirr.Creator;
   return res.json({
-    status: "ok", NameOfeDirr,
+    status: "ok",
+    NameOfeDirr,
     Location,
     eDirrType,
     Amount,
@@ -1404,13 +1341,11 @@ exports.Getedirrs = async (req, res) => {
     Description,
     Creator,
   });
-
-}
+};
 //   );
 
-//   app.post("/profile", 
+//   app.post("/profile",
 exports.profile = async (req, res) => {
-
   // console.log(password);
   // console.log(email);
   // const user = await User.findOne({ email });
@@ -1428,7 +1363,8 @@ exports.profile = async (req, res) => {
   var kebele = info.kebele;
   var houseNumber = info.houseNumber;
   var phoneNumber = info.phoneNumber;
-  var level = info.level; var position = info.position;
+  var level = info.level;
+  var position = info.position;
   var institution = info.institution;
   var place = info.place;
   var certificate = info.certificate;
@@ -1446,7 +1382,9 @@ exports.profile = async (req, res) => {
   var Emergencyaddress = info.Emergencyaddress;
   // console.log("wewewe"+nation);
   return res.json({
-    status: "ok", nation, email,
+    status: "ok",
+    nation,
+    email,
     firstName,
     lastName,
     dateOfBirth,
@@ -1477,61 +1415,59 @@ exports.profile = async (req, res) => {
     EmergencyPhoneNo,
     Emergencyaddress,
   });
-
-}
+};
 //   );
 
-
-//   app.post("/payment", 
+//   app.post("/payment",
 exports.payment = async (req, res) => {
   const { email, Amount, edirrName } = req.body;
   console.log(Amount + email + edirrName);
-  const ch = new chapa.Chapa(
-    {
-      secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF"
-    }
-  )
+  const ch = new chapa.Chapa({
+    secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+  });
 
   const tx_ref = await ch.generateTransactionReference({
-    prefix: 'Edir',
-    size: 20
+    prefix: "Edir",
+    size: 20,
   });
-  var request = require('request');
+  var request = require("request");
   var options = {
-    'method': 'POST',
-    'url': 'https://api.chapa.co/v1/transaction/initialize',
-    'headers': {
-      'Authorization': 'Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF',
-      'Content-Type': 'application/json'
+    method: "POST",
+    url: "https://api.chapa.co/v1/transaction/initialize",
+    headers: {
+      Authorization: "Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "amount": Amount,
-      "currency": "ETB",
-      "email": email,
-      "first_name": "Yonatan",
-      "last_name": "Mekonnen",
-      "phone_number": "0912345678",
-      "tx_ref": tx_ref,
-      "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      "return_url": "http://localhost:3000/my-edirr",
+      amount: Amount,
+      currency: "ETB",
+      email: email,
+      first_name: "Yonatan",
+      last_name: "Mekonnen",
+      phone_number: "0912345678",
+      tx_ref: tx_ref,
+      callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+      return_url: "http://localhost:3000/my-edirr",
       "customization[title]": "Payment for my favourite merchant",
-      "customization[description]": "You have paid your inital payment "
-    })
-
+      "customization[description]": "You have paid your inital payment ",
+    }),
   };
 
   request(options, function (error, response) {
     if (error) throw new Error(error);
-    Edirs.updateOne({ "NameOfeDirr": edirrName }, { $set: { "Members.$[].Payment": "Payed" } }, (err, doc) => {
+    Edirs.updateOne(
+      { NameOfeDirr: edirrName },
+      { $set: { "Members.$[].Payment": "Payed" } },
+      (err, doc) => {
+        console.log("chapa said" + response.body);
+        const respBody = JSON.parse(response.body);
 
-      console.log("chapa said" + response.body);
-      const respBody = JSON.parse(response.body);
-
-      return res.json({ url: respBody.data.checkout_url });
-      // console.log(respBody.data.checkout_url);
-      // res=response.body;
-      // return res.json(respBody);
-    })
+        return res.json({ url: respBody.data.checkout_url });
+        // console.log(respBody.data.checkout_url);
+        // res=response.body;
+        // return res.json(respBody);
+      }
+    );
   });
   // if (err) return console.log(err);
   //       console.log("NOtified")
@@ -1540,13 +1476,10 @@ exports.payment = async (req, res) => {
   //  Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}}
   // Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}}
   //   const users = await Edirs.findOne({Members:{$elemMatch: {"Email":email,"Payment":"Payed"}}});
-
-}
+};
 //   );
 
-
-
-//   app.post("/checkmonthpayment", 
+//   app.post("/checkmonthpayment",
 exports.checkmonthpayment = async (req, res) => {
   const { email, edirrName, toDay } = req.body;
   console.log("the name is  " + edirrName);
@@ -1558,7 +1491,11 @@ exports.checkmonthpayment = async (req, res) => {
 
   // const u = JSON.parse(user.Members);
   // console.log(u);
-  const users = await Edirs.findOne({ "NameOfeDirr": edirrName, "MonthlyPayment.Email": email, "MonthlyPayment.Date": toDay });
+  const users = await Edirs.findOne({
+    NameOfeDirr: edirrName,
+    "MonthlyPayment.Email": email,
+    "MonthlyPayment.Date": toDay,
+  });
   // const users = await Edirs.find({MonthlyPayment:{Email:email}});
   // console.log(users);
   var check;
@@ -1570,17 +1507,10 @@ exports.checkmonthpayment = async (req, res) => {
   }
   console.log(check);
   return res.json({ check });
-
-}
+};
 //   );
 
-
-
-
-
-
-
-//   app.post("/monthpayment", 
+//   app.post("/monthpayment",
 exports.monthpayment = async (req, res) => {
   const { email, Amount, edirrName } = req.body;
   const now = new Date();
@@ -1588,56 +1518,61 @@ exports.monthpayment = async (req, res) => {
   var bb = aa.split(" ", 4);
   const today = bb.join();
   console.log(Amount + email);
-  const ch = new chapa.Chapa(
-    {
-      secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF"
-    }
-  )
+  const ch = new chapa.Chapa({
+    secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+  });
 
   const tx_ref = await ch.generateTransactionReference({
-    prefix: 'Edir',
-    size: 20
+    prefix: "Edir",
+    size: 20,
   });
 
   var options = {
-    'method': 'POST',
-    'url': 'https://api.chapa.co/v1/transaction/initialize',
-    'headers': {
-      'Authorization': 'Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF',
-      'Content-Type': 'application/json'
+    method: "POST",
+    url: "https://api.chapa.co/v1/transaction/initialize",
+    headers: {
+      Authorization: "Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "amount": Amount,
-      "currency": "ETB",
-      "email": email,
-      "first_name": "Yonatan",
-      "last_name": "Mekonnen",
-      "phone_number": "0912345678",
-      "tx_ref": tx_ref,
-      "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      "return_url": "http://localhost:3000/my-edirr",
+      amount: Amount,
+      currency: "ETB",
+      email: email,
+      first_name: "Yonatan",
+      last_name: "Mekonnen",
+      phone_number: "0912345678",
+      tx_ref: tx_ref,
+      callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+      return_url: "http://localhost:3000/my-edirr",
       "customization[title]": "Payment for my favourite merchant",
-      "customization[description]": "You have paid your inital payment "
-    })
-
+      "customization[description]": "You have paid your inital payment ",
+    }),
   };
-  var request = require('request');
+  var request = require("request");
   request(options, function (error, response) {
     if (error) throw new Error(error);
     // ({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}}
     // UserInfo.updateMany({email: email},{$set:{firstName:firstName,lastName:lastName,dateOfBirth:DOB,nation:nation,gender:gender,myFile:postImage}}
     // Edirs.updateMany({"NameOfeDirr": edirrName},{$push:{MonthlyPayment:{Email:email,Date:today,Amount:Amount}}.$[].Email":email,"MonthlyPayment.$[].Date":today,"MonthlyPayment.$[].Amount":Amount}}
-    Edirs.updateMany({ "NameOfeDirr": edirrName }, { $push: { MonthlyPayment: { Email: email, Date: today, Amount: Amount } } }, (err, doc) => {
-      if (err) return console.log(err);
-      console.log("payed")
-      console.log("chapa said" + response.body);
-      const respBody = JSON.parse(response.body);
+    Edirs.updateMany(
+      { NameOfeDirr: edirrName },
+      {
+        $push: {
+          MonthlyPayment: { Email: email, Date: today, Amount: Amount },
+        },
+      },
+      (err, doc) => {
+        if (err) return console.log(err);
+        console.log("payed");
+        console.log("chapa said" + response.body);
+        const respBody = JSON.parse(response.body);
 
-      return res.json({ url: respBody.data.checkout_url });
-      // console.log(respBody.data.checkout_url);
-      // res=response.body;
-      // return res.json(respBody);
-    })
+        return res.json({ url: respBody.data.checkout_url });
+        // console.log(respBody.data.checkout_url);
+        // res=response.body;
+        // return res.json(respBody);
+      }
+    );
   });
   // if (err) return console.log(err);
   //       console.log("NOtified")
@@ -1646,35 +1581,40 @@ exports.monthpayment = async (req, res) => {
   //  Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}}
   // Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}}
   //   const users = await Edirs.findOne({Members:{$elemMatch: {"Email":email,"Payment":"Payed"}}});
-
-}
+};
 //   );
 
-
-
-
-
-
-
-
-
-//   app.post("/Join", 
+//   app.post("/Join",
 exports.Join = async (req, res) => {
   const { email, NameOfeDirr, Creator } = req.body;
   console.log(email, NameOfeDirr, Creator);
-  Edirs.updateOne({ NameOfeDirr: NameOfeDirr }, { $push: { Member: [{ Email: email }] } }, (err, doc) => {
-    if (err) return console.log(err);
-    User.updateOne({ email: Creator }, { $push: { Notification: [{ text: email + " wants to join your edirr", name: email, edirr: NameOfeDirr }] } }, (err, doc) => {
+  Edirs.updateOne(
+    { NameOfeDirr: NameOfeDirr },
+    { $push: { Member: [{ Email: email }] } },
+    (err, doc) => {
       if (err) return console.log(err);
-      console.log("NOtified")
-    });
-    res.json(doc)
-
-  });
-
-
-
-}
+      User.updateOne(
+        { email: Creator },
+        {
+          $push: {
+            Notification: [
+              {
+                text: email + " wants to join your edirr",
+                name: email,
+                edirr: NameOfeDirr,
+              },
+            ],
+          },
+        },
+        (err, doc) => {
+          if (err) return console.log(err);
+          console.log("NOtified");
+        }
+      );
+      res.json(doc);
+    }
+  );
+};
 //   );
 
 // var i;
@@ -1721,136 +1661,179 @@ exports.Join = async (req, res) => {
 
 //   // console.log(users[);
 
-
-
-
-
-//   app.post("/Accept1", 
+//   app.post("/Accept1",
 exports.Accept1 = async (req, res) => {
   const { email, edirr, Creator } = req.body;
   console.log("acccept111");
   console.log(Creator);
   const paymentNotification = await Edirs.find({ "Members.Email": email });
 
-  Edirs.updateOne({ NameOfeDirr: edirr }, { $push: { Members: { Email: email, Payment: "Not Payed" } } }, (err, doc) => {
-    if (err) return console.log(err);
-    // User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
-    //  
-    paymentNotification.forEach((PN) => {
-      console.log("payment notification", PN.NameOfeDirr, PN.Amount);
-      User.updateOne({ email: email }, { $push: { Notification: [{ text: "you have joined please pay your inital payemnt to procced ", edirr: PN.NameOfeDirr, type: "iPayment", Payment: PN.Amount }] } }, (err, doc) => {
-        if (err) return console.log(err);
-        console.log("NOtified")
-
+  Edirs.updateOne(
+    { NameOfeDirr: edirr },
+    { $push: { Members: { Email: email, Payment: "Not Payed" } } },
+    (err, doc) => {
+      if (err) return console.log(err);
+      // User.updateOne({email:eDir},{$push:{Notification:[{text:"Your monthly payment is due ",edirr:PN.NameOfeDirr,type:"mPayment",Date:now,Payment:PN.Amount}]}},(err,doc)=>{
+      //
+      paymentNotification.forEach((PN) => {
+        console.log("payment notification", PN.NameOfeDirr, PN.Amount);
         User.updateOne(
-          { email: Creator },
-          { $pull: { Notification: { name: email } } }, (err, doc) => {
+          { email: email },
+          {
+            $push: {
+              Notification: [
+                {
+                  text: "you have joined please pay your inital payemnt to procced ",
+                  edirr: PN.NameOfeDirr,
+                  type: "iPayment",
+                  Payment: PN.Amount,
+                },
+              ],
+            },
+          },
+          (err, doc) => {
             if (err) return console.log(err);
-            console.log("removed the notification")
-          })
+            console.log("NOtified");
+
+            User.updateOne(
+              { email: Creator },
+              { $pull: { Notification: { name: email } } },
+              (err, doc) => {
+                if (err) return console.log(err);
+                console.log("removed the notification");
+              }
+            );
+          }
+        );
       });
-    })
-    res.json(doc)
-  });
-}
+      res.json(doc);
+    }
+  );
+};
 //   );
 
-//   app.post("/RequestService", 
+//   app.post("/RequestService",
 exports.RequestService = async (req, res) => {
   const { email, edirrName, Reason, postImage, creator } = req.body;
   console.log(email);
-  Edirs.updateOne({ NameOfeDirr: edirrName }, { $push: { Request: { Email: email, Reason: Reason, Evidence: postImage, Payment: "Not Paid", Edirr: edirrName } } }, (err, doc) => {
-    if (err) return console.log(err);
-    User.updateOne({ email: creator }, { $push: { Notification: [{ text: email + " wants to request your edirr for " + Reason, name: email, edirr: edirrName }] } }, (err, doc) => {
+  Edirs.updateOne(
+    { NameOfeDirr: edirrName },
+    {
+      $push: {
+        Request: {
+          Email: email,
+          Reason: Reason,
+          Evidence: postImage,
+          Payment: "Not Paid",
+          Edirr: edirrName,
+        },
+      },
+    },
+    (err, doc) => {
       if (err) return console.log(err);
-      console.log("Notified")
-    });
-    res.json(doc)
-
-  });
-
-}
+      User.updateOne(
+        { email: creator },
+        {
+          $push: {
+            Notification: [
+              {
+                text: email + " wants to request your edirr for " + Reason,
+                name: email,
+                edirr: edirrName,
+              },
+            ],
+          },
+        },
+        (err, doc) => {
+          if (err) return console.log(err);
+          console.log("Notified");
+        }
+      );
+      res.json(doc);
+    }
+  );
+};
 //   );
 
-
-//   app.post("/AcceptService", 
+//   app.post("/AcceptService",
 exports.AcceptService = async (req, res) => {
   const { Email, Reason, Amount, Edirr } = req.body;
-  const ch = new chapa.Chapa(
-    {
-      secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF"
-    }
-  )
+  const ch = new chapa.Chapa({
+    secretKey: "CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+  });
 
   const tx_ref = await ch.generateTransactionReference({
-    prefix: 'Edir',
-    size: 20
+    prefix: "Edir",
+    size: 20,
   });
 
   var options = {
-    'method': 'POST',
-    'url': 'https://api.chapa.co/v1/transaction/initialize',
-    'headers': {
-      'Authorization': 'Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF',
-      'Content-Type': 'application/json'
+    method: "POST",
+    url: "https://api.chapa.co/v1/transaction/initialize",
+    headers: {
+      Authorization: "Bearer CHASECK_TEST-SLHPTDx9tbv7BkdaNmx45Lu4yLkcvLcF",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "amount": Amount,
-      "currency": "ETB",
-      "email": Email,
-      "first_name": "Yonatan",
-      "last_name": "Mekonnen",
-      "phone_number": "0912345678",
-      "tx_ref": tx_ref,
-      "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      "return_url": "http://localhost:3000/my-edirr",
+      amount: Amount,
+      currency: "ETB",
+      email: Email,
+      first_name: "Yonatan",
+      last_name: "Mekonnen",
+      phone_number: "0912345678",
+      tx_ref: tx_ref,
+      callback_url: "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+      return_url: "http://localhost:3000/my-edirr",
       "customization[title]": "Payment for my favourite merchant",
-      "customization[description]": "You have paid your inital payment "
-    })
-
+      "customization[description]": "You have paid your inital payment ",
+    }),
   };
   //  Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}},(err,doc)=>{
-  var request = require('request');
+  var request = require("request");
   request(options, function (error, response) {
     if (error) throw new Error(error);
-    Edirs.updateOne({ "NameOfeDirr": Edirr, "Request.$[].Email": Email }, { $set: { "Request.$[].Payment": "Payed" } }, (err, doc) => {
-      if (err) return console.log(err);
-      User.updateOne({ email: Email }, { $push: { Notification: [{ text: "you'r request have been accecpted for the reason  " + Reason }] } },
-        (err, doc) => {
-          if (err) return console.log(err);
-          console.log("NOtified");
-          // Edirs.updateOne(
-          //   {email:Creator },
-          //  {$pull : {Request:{name:email}}},(err,doc)=>{
-          //    if (err) return console.log(err);
-          //    console.log("removed the notification")
+    Edirs.updateOne(
+      { NameOfeDirr: Edirr, "Request.$[].Email": Email },
+      { $set: { "Request.$[].Payment": "Payed" } },
+      (err, doc) => {
+        if (err) return console.log(err);
+        User.updateOne(
+          { email: Email },
+          {
+            $push: {
+              Notification: [
+                {
+                  text:
+                    "you'r request have been accecpted for the reason  " +
+                    Reason,
+                },
+              ],
+            },
+          },
+          (err, doc) => {
+            if (err) return console.log(err);
+            console.log("NOtified");
+            // Edirs.updateOne(
+            //   {email:Creator },
+            //  {$pull : {Request:{name:email}}},(err,doc)=>{
+            //    if (err) return console.log(err);
+            //    console.log("removed the notification")
 
+            //  })
+          }
+        );
+        console.log("payed");
+        console.log("chapa said" + response.body);
+        const respBody = JSON.parse(response.body);
 
+        return res.json({ url: respBody.data.checkout_url });
 
-          //  })
-
-        });
-      console.log("payed")
-      console.log("chapa said" + response.body);
-      const respBody = JSON.parse(response.body);
-
-      return res.json({ url: respBody.data.checkout_url });
-
-      // console.log(respBody.data.checkout_url);
-      // res=response.body;
-      // return res.json(respBody);
-    })
+        // console.log(respBody.data.checkout_url);
+        // res=response.body;
+        // return res.json(respBody);
+      }
+    );
   });
-
-
-
-
-
-
-
-
-
-
 
   //   console.log(email);
   //   Edirs.updateOne({NameOfeDirr: edirr},{$push:{Members:{Email:email,Payment:"Not Payed"}}},(err,doc)=>{
@@ -1863,27 +1846,22 @@ exports.AcceptService = async (req, res) => {
   //     res.json(doc)
 
   //   });
-
-
-
-}
+};
 //   );
 
-
-
-
-
-//   app.post("/checkpayment", 
+//   app.post("/checkpayment",
 exports.checkpayment = async (req, res) => {
   const { email, edirrName } = req.body;
   console.log("the name is  " + edirrName);
   const user = await Edirs.findOne({ edirrName });
 
-
-
   // const u = JSON.parse(user.Members);
   // console.log(u);
-  const users = await Edirs.findOne({ "NameOfeDirr": edirrName, "Members.Email": email, "Members.Payment": "Not Payed" });
+  const users = await Edirs.findOne({
+    NameOfeDirr: edirrName,
+    "Members.Email": email,
+    "Members.Payment": "Not Payed",
+  });
   // console.log(users);
   var check;
   console.log(users);
@@ -1894,16 +1872,12 @@ exports.checkpayment = async (req, res) => {
   }
   console.log(check);
   return res.json({ check });
-
-}
+};
 //   );
 
-
-
-//   app.post("/login-user", 
+//   app.post("/login-user",
 
 //   );
-
 
 // app.post("/uploads", async (req, res) => {
 //   console.log("we are in upload");
@@ -1918,68 +1892,139 @@ exports.checkpayment = async (req, res) => {
 //   }
 // })
 
-//   app.post("/UpdateBasic", 
+//   app.post("/UpdateBasic",
 exports.UpdateBasic = async (req, res) => {
-  const { email, firstName, lastName, DOB, nation, gender, postImage } = req.body;
+  const { email, firstName, lastName, DOB, nation, gender, postImage } =
+    req.body;
   console.log(email, firstName, lastName, DOB, nation, gender);
   // console.log(postImage);
-  UserInfo.updateMany({ email: email }, { $set: { firstName: firstName, lastName: lastName, dateOfBirth: DOB, nation: nation, gender: gender, myFile: postImage } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  UserInfo.updateMany(
+    { email: email },
+    {
+      $set: {
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: DOB,
+        nation: nation,
+        gender: gender,
+        myFile: postImage,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 //   );
-//   app.post("/UpdateEmergency", 
+//   app.post("/UpdateEmergency",
 exports.UpdateEmergency = async (req, res) => {
   console.log("we in emrgency");
   const { email, emergency, relationship, EPN, EA } = req.body;
-  UserInfo.updateMany({ email: email }, { $set: { emergency_contact: emergency, relationship: relationship, EmergencyPhoneNo: EPN, Emergencyaddress: EA } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  UserInfo.updateMany(
+    { email: email },
+    {
+      $set: {
+        emergency_contact: emergency,
+        relationship: relationship,
+        EmergencyPhoneNo: EPN,
+        Emergencyaddress: EA,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 //   );
-//   app.post("/UpdateAddress", 
+//   app.post("/UpdateAddress",
 exports.UpdateAddress = async (req, res) => {
   console.log("we in emrgency");
-  const { email, city, subCity, wereda, kebele, houseNumber, phoneNumber } = req.body;
-  UserInfo.updateMany({ email: email }, { $set: { city: city, subCity: subCity, wereda: wereda, kebele: kebele, houseNumber: houseNumber, phoneNumber: phoneNumber } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  const { email, city, subCity, wereda, kebele, houseNumber, phoneNumber } =
+    req.body;
+  UserInfo.updateMany(
+    { email: email },
+    {
+      $set: {
+        city: city,
+        subCity: subCity,
+        wereda: wereda,
+        kebele: kebele,
+        houseNumber: houseNumber,
+        phoneNumber: phoneNumber,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 //   );
 
-//   app.post("/UpdateEducation", 
+//   app.post("/UpdateEducation",
 exports.UpdateEducation = async (req, res) => {
   console.log("we in emrgency");
-  const { email, level, position, institution, place, certificate, workId, postcertificate, postexperience } = req.body;
-  UserInfo.updateMany({ email: email }, { $set: { level: level, position: position, institution: institution, place: place, certificate: certificate, workId: workId, certificateres: postcertificate, experienceres: postexperience } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  const {
+    email,
+    level,
+    position,
+    institution,
+    place,
+    certificate,
+    workId,
+    postcertificate,
+    postexperience,
+  } = req.body;
+  UserInfo.updateMany(
+    { email: email },
+    {
+      $set: {
+        level: level,
+        position: position,
+        institution: institution,
+        place: place,
+        certificate: certificate,
+        workId: workId,
+        certificateres: postcertificate,
+        experienceres: postexperience,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 //   );
-//   app.post("/UpdateMarital", 
+//   app.post("/UpdateMarital",
 exports.UpdateMarital = async (req, res) => {
   console.log("we in marital");
-  const { email, title, partner, PPN, PA, childName, childGender, childAge } = req.body;
-  UserInfo.updateMany({ email: email }, { $set: { title: title, partner: partner, parent_po_no: PPN, parent_address: PA, childName: childName, childGender: childGender, childAge: childAge } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  const { email, title, partner, PPN, PA, childName, childGender, childAge } =
+    req.body;
+  UserInfo.updateMany(
+    { email: email },
+    {
+      $set: {
+        title: title,
+        partner: partner,
+        parent_po_no: PPN,
+        parent_address: PA,
+        childName: childName,
+        childGender: childGender,
+        childAge: childAge,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 //   );
 
-
-
-
-//   app.post("/login-user1", 
+//   app.post("/login-user1",
 exports.loginUser1 = async (req, res) => {
   const { email, password } = req.body;
   console.log(email);
@@ -1994,7 +2039,8 @@ exports.loginUser1 = async (req, res) => {
       const role = user.role;
       if (role == "admin") {
         return res.json({ status: "ok", role: "admin", data: token });
-      } if (role == "user") {
+      }
+      if (role == "user") {
         return res.json({ status: "ok", role: "user", data: token });
       }
     } else {
@@ -2002,5 +2048,5 @@ exports.loginUser1 = async (req, res) => {
     }
   }
   res.json({ status: "error", error: "InvAlid Password" });
-}
+};
 //   );
