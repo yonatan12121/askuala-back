@@ -417,10 +417,12 @@ exports.loginUser = async (req, res) => {
 
 exports.storeTodo = (req, res) => {
   const { data } = req.body;
-  var todo = data.data;
+  console.log(data.data);
+  var todo = data.data.getTodo;
+  var studentId = data.data.id;
   console.log(data);
   try {
-    Todo.create({ todo });
+    Todo.create({ todo ,studentId});
     res.send({ status: "ok" });
     console.log("todolist updated successfully");
   } catch (error) {
@@ -594,6 +596,7 @@ exports.fetchbook = (req, res) => {
 }
 exports.fetchUsers = (req, res) => {
   // const {username,department} = req.body;
+  console.log("fetch");
   User.find({}, (err, data) => {
     if (err) {
       res.status(500).send(err);

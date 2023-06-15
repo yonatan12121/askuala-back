@@ -2,6 +2,7 @@ const mongoose= require("mongoose");
 
 const TodoSchema = new mongoose.Schema({
     todo:String,
+    studentId:String,
 
 
 },{timestamps:true},
