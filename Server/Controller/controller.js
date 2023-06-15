@@ -764,6 +764,30 @@ exports.removeUser = async (req, res) => {
 
 
 
+exports.removeTodo = async (req, res) => {
+  const { id,  } = req.body;
+  console.log(id);
+  try {
+    // Find the user by ID and remove them
+    const result = await Todo.findByIdAndRemove(id);
+
+    if (result) {
+      console.log('Todo removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('todo not found');
+    }
+  } catch (error) {
+    console.error('Error removing todo:', error);
+    res.status(500).send(error);
+  }
+ 
+}
+
+
+
+
+
 
 
 

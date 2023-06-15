@@ -16,6 +16,8 @@ route.get('/GetAdminnot', controller.GetAdminnot);
 route.post('/Getedirrho', controller.Getedirrho);
 route.post('/Getedirrname', controller.Getedirrname);
 route.post('/Getnot', controller.Getnot);
+route.post('/removeUser',controller.removeUser);
+route.post('/removeTodo',controller.removeTodo);
 route.post('/uploads', controller.uploads);
 route.post('/register', controller.register);
 route.post('/storebook', controller.storebook);
