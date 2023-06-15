@@ -386,25 +386,37 @@ exports.loginUser = async (req, res) => {
         });
       }
       if (role == "Admin") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
       if (role == "SuperVisor") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
       if (role == "Teacher") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
     } else {
       return res.json({ error: "error" });
@@ -412,7 +424,6 @@ exports.loginUser = async (req, res) => {
   }
   res.json({ status: "error", error: "InvAlid Password" });
 };
-
 
 exports.storeTodo = (req, res) => {
   const { data } = req.body;
