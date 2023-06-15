@@ -827,9 +827,86 @@ exports.removeTodo = async (req, res) => {
 }
 
 
+exports.removeClass = async (req, res) => {
+  const { id,  } = req.body;
+  console.log(id);
+  try {
+    // Find the user by ID and remove them
+    const result = await Class.findByIdAndRemove(id);
+
+    if (result) {
+      console.log('class removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('class not found');
+    }
+  } catch (error) {
+    console.error('Error removing todo:', error);
+    res.status(500).send(error);
+  }
+ 
+}
+
+exports.removeCourse = async (req, res) => {
+  const { id,  } = req.body;
+  console.log(id);
+  try {
+    // Find the user by ID and remove them
+    const result = await Courses.findByIdAndRemove(id);
+
+    if (result) {
+      console.log('Courses removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('Courses not found');
+    }
+  } catch (error) {
+    console.error('Error removing Courses:', error);
+    res.status(500).send(error);
+  }
+ 
+}
+
+exports.removeAnnouncement = async (req, res) => {
+  const { id,  } = req.body;
+  console.log(id);
+  try {
+    // Find the user by ID and remove them
+    const result = await Announcements.findByIdAndRemove(id);
+
+    if (result) {
+      console.log('Announcement removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('Announcement not found');
+    }
+  } catch (error) {
+    console.error('Error removing Announcement:', error);
+    res.status(500).send(error);
+  }
+ 
+}
 
 
+exports.removeQA = async (req, res) => {
+  const { id} = req.body;
+  console.log(id);
+  try {
+    // Find the user by ID and remove them
+    const result = await Questions.findByIdAndRemove(id);
 
+    if (result) {
+      console.log('Questions removed successfully:', result);
+      res.status(200).send(result);
+    } else {
+      console.log('Questions not found');
+    }
+  } catch (error) {
+    console.error('Error removing Questions:', error);
+    res.status(500).send(error);
+  }
+ 
+}
 
 
 
