@@ -767,7 +767,8 @@ exports.JoinClass = async (req, res) => {
 
 exports.storeMaterials = async (req, res) => {
   const { data} = req.body;
-  var ClassId= data.ClassId;
+  console.log(data);
+  var ClassId= data.Classid;
   var Title= data.title;
   
   //   console.log(ClassId,StudentId,StudentName,StudentDept);
@@ -783,9 +784,9 @@ exports.storeMaterials = async (req, res) => {
 }
 
 exports.removeUser = async (req, res) => {
-  const { id, email } = req.body;
-  console.log(id);
-  console.log(email);
+  const { data } = req.body;
+  var id = data.data
+  console.log(data);
   try {
     // Find the user by ID and remove them
     const result = await User.findByIdAndRemove(id);
