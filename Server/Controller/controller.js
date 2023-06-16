@@ -101,25 +101,37 @@ exports.loginUser = async (req, res) => {
         });
       }
       if (role == "Admin") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
       if (role == "SuperVisor") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
       if (role == "Teacher") {
-        return res.json({ status: "ok", role,
-        id,
-        password,
-        fullName,
-        department, data: token });
+        return res.json({
+          status: "ok",
+          role,
+          id,
+          password,
+          fullName,
+          department,
+          data: token,
+        });
       }
     } else {
       return res.json({ error: "error" });
@@ -127,7 +139,6 @@ exports.loginUser = async (req, res) => {
   }
   res.json({ status: "error", error: "InvAlid Password" });
 };
-
 
 exports.storeTodo = (req, res) => {
   const { data } = req.body;
@@ -529,8 +540,9 @@ exports.removeClass = async (req, res) => {
 };
 
 exports.removeCourse = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Courses.findByIdAndRemove(id);
@@ -548,8 +560,9 @@ exports.removeCourse = async (req, res) => {
 };
 
 exports.removeAnnouncement = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Announcements.findByIdAndRemove(id);
@@ -567,8 +580,9 @@ exports.removeAnnouncement = async (req, res) => {
 };
 
 exports.removeQA = async (req, res) => {
-  const { id } = req.body;
-  console.log(id);
+  const { data } = req.body;
+  console.log(data);
+  var id = data.data;
   try {
     // Find the user by ID and remove them
     const result = await Questions.findByIdAndRemove(id);
