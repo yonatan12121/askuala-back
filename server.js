@@ -9,16 +9,7 @@ app.use(cors());
 app.use(bodyparser.urlencoded({ extended : true}))
 
 const connectDB = require('./server/database/connection');
-const schedule = require('node-schedule');
-const { runOnceADay,test } = require('./Server/Controller/controller');
-  //  test();
-
-  schedule.scheduleJob ('41 14 * * *'   ,runOnceADay
-
-
-);
-// test();
-// schedule.scheduleJob('0 0 * * *', runOnceADay());
+  
 dotenv.config({ path: ".env" });
 const PORT = process.env.PORT||8080
 connectDB();
