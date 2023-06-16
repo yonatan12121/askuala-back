@@ -271,19 +271,19 @@ exports.storeClass = (req, res) => {
   }
 };
 
-exports.storeMaterials = (req, res) => {
-  const { data } = req.body;
-  CourseId = data.courseId;
+// exports.storeMaterials = (req, res) => {
+//   const { data } = req.body;
+//   CourseId = data.courseId;
 
-  try {
-    Class.create({ CourseId });
-    res.send({ status: "ok" });
-    console.log("Class created successfully");
-  } catch (error) {
-    res.send({ status: "error" });
-    console.log(error);
-  }
-};
+//   try {
+//     Class.create({ CourseId });
+//     res.send({ status: "ok" });
+//     console.log("Class created successfully");
+//   } catch (error) {
+//     res.send({ status: "error" });
+//     console.log(error);
+//   }
+// };
 
 exports.storeannouce = (req, res) => {
   const { data } = req.body;
