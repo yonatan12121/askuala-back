@@ -603,6 +603,7 @@ exports.removeQA = async (req, res) => {
 
 exports.forgotPassword = async (req, res) => {
   var email = req.query.email;
+  console.log(email);
   const user = await User.findOne({ email });
   if (!user) {
     console.log("User Not found");
@@ -632,7 +633,7 @@ exports.forgotPassword = async (req, res) => {
     var forgotPasswordLink =
       "http://localhost:3000/reset-password/?token=" + forgotPasswordToken;
     var mailOptions = {
-      from: "valwintina@gmail.com",
+      from: "Askuala@gmail.com",
       to: req.query.email,
       subject: "Reset Password",
       html:
