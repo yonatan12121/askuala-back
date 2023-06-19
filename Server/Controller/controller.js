@@ -621,16 +621,16 @@ exports.forgotPassword = async (req, res) => {
   console.log("hello", req.query.email);
   if (req.query.email) {
     console.log(req.query.email);
-    const forgotPasswordToken = jwt.sign({},
-      { userEmail: req.query.email },
-      "Wintu-Yoni@2022",
-      {
-        expiresIn: "4h",
-      }
-    );
+    // const forgotPasswordToken = jwt.sign({},
+    //   { userEmail: req.query.email },
+    //   "Wintu-Yoni@2022",
+    //   {
+    //     expiresIn: "4h",
+    //   }
+    // );
 
     var forgotPasswordLink =
-      "http://localhost:3000/reset-password/?token=" + forgotPasswordToken;
+      "http://localhost:3000/reset-password/?token=" ;
     var mailOptions = {
       from: "valwintina@gmail.com",
       to: req.query.email,
