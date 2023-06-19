@@ -678,3 +678,14 @@ exports.forgotPassword = async (req, res) => {
     });
   }
 };
+exports.ResetPassword = async (req, res) => {
+  const { newPassword, email } = req.body;
+  console.log(newPassword, email);
+  // Edirs.updateOne({ "NameOfeDirr": edirrName }, { $set: { "Members.$[].Payment": "Payed" } }, (err, doc) => {
+  const encreptedPassword = await bcrypt.hash(newPassword, 10);
+  User.updateOne({ "email": email }, { $set: { password: encreptedPassword } }, (err, doc) => {
+    if (err) return console.log(err);
+    return res.json({ doc });
+  })
+  // $elemMatch: { "Creator": email }
+}

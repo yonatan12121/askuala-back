@@ -34,5 +34,7 @@ route.get('/fetchAnnouncement', controller.fetchAnnouncement);
 route.get('/api/forgot-password',controller.forgotPassword);
 route.post('/JoinClass', controller.JoinClass);
 route.post('/login-user', controller.loginUser);
+route.post('/ResetPassword',controller.ResetPassword);
+
 
 module.exports = route
