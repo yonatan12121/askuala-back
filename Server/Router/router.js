@@ -31,6 +31,7 @@ route.get('/fetchbook', controller.fetchbook);
 route.get('/fetchCourse', controller.fetchCourse);
 route.get('/fetchTodo', controller.fetchTodo);
 route.get('/fetchAnnouncement', controller.fetchAnnouncement);
+route.get('/api/forgot-password',controller.forgotPassword);
 route.post('/JoinClass', controller.JoinClass);
 route.post('/login-user', controller.loginUser);
 

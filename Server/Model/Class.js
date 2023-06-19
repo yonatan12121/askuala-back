@@ -11,7 +11,8 @@ const MemberScehma = new mongoose.Schema(
   const MaterialScehma = new mongoose.Schema(
     {
       ClassId:String,
-      Title:String
+      Title:String,
+      File:String
     },{timestamps:true},
   )
 
