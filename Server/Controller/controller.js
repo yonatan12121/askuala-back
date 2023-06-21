@@ -688,13 +688,14 @@ exports.ResetPassword = async (req, res) => {
 };
 exports.UpdateCourse = async (req, res) => {
   const { data } = req.body;
-  (id = data.id)((CourseId = data.courseId)),
-    (CourseName = data.courseName),
-    (Ects = data.ETCS),
-    (CreaditHour = data.creaditHours),
-    (lectureID = data.teacherId),
-    (courseDept = data.courseDept),
-    (CourseCreator = data.CourseCreator);
+  var id = data.data._id;
+   var CourseId = data.data.courseId;
+    var CourseName = data.data.courseName;
+    var Ects = data.data.ETCS;
+    var CreaditHour = data.data.creaditHours;
+    var lectureID = data.data.teacherId;rs
+    var courseDept = data.data.courseDept;
+    var CourseCreator = data.data.CourseCreator;
   console.log(
     id,
     CourseId,
@@ -728,20 +729,24 @@ exports.UpdateCourse = async (req, res) => {
 exports.UpdateAccount = async (req, res) => {
   const { data } = req.body;
   console.log(data);
-  // const role = "student";
-  // const Creator =email;
-  const _id = data._id;
-  const Id = data.id;
-  const fullName = data.FullName;
-  const email = data.email;
-  const gender = data.gender;
-  const phoneNumber = data.phoneNumber;
-  const role = data.role;
-  const department = data.department;
+  var _id = data.data._id;
+  var Id = data.data.id;
+  var fullName = data.data.FullName;
+  var email = data.data.email;
+  var gender = data.data.gender;
+  var phoneNumber = data.data.phoneNumber;
+  var role = data.data.role;
+  var department = data.data.department;
 
-  console.log(data);
-  // console.log(postImage);
-  User.updateMany(
+  // console.log("update", data);
+  console.log("update", data.data.FullName,
+    email,
+    gender,
+    phoneNumber,
+    role,
+    department);
+
+  User.findOneAndUpdate(
     { _id: _id },
     {
       $set: {
@@ -751,25 +756,92 @@ exports.UpdateAccount = async (req, res) => {
         gender: gender,
         phoneNumber: phoneNumber,
         role: role,
-        department: department,
-      },
+        department: department
+      }
     },
+    { new: true },
     (err, doc) => {
       if (err) return console.log(err);
-      res.json(doc);
+      return res.json({ doc });
     }
   );
+  // console.log(da);
+  // User.findOneAndUpdate(
+  //   { _id: "6492f18f98f1bed2c6dcc3aa" },
+  //   {
+  //     $set: {
+  //       Id: Id,
+  //       fullName: data.FullName,
+  //       email: email,
+  //       gender: gender,
+  //       phoneNumber: phoneNumber,
+  //       role: role,
+  //       department: department,
+  //     },
+  //   },
+  //   { new: true }, // This option returns the updated document
+  //   (err, doc) => {
+  //     if (err) return console.log(err);
+  //     res.json(doc);
+  //     console.log(doc);
+  //   }
+  // );
 };
+
+
+// exports.UpdateAccount = async (req, res) => {
+//   const { data } = req.body;
+//   console.log(data);
+//   // const role = "student";
+//   // const Creator =email;
+//   const _id = data._id;
+//   const Id = data.id;
+//   const fullName = data.FullName;
+//   const email = data.email;
+//   const gender = data.gender;
+//   const phoneNumber = data.phoneNumber;
+//   const role = data.role;
+//   const department = data.department;
+
+//   console.log("update",data);
+//   // const da = User.findById({_id:_id})
+//   // console.log(da);
+//   // (err, doc) => {
+//   //         if (err) return console.log(err);
+//   //         res.json(doc);
+//   //         console.log(da);
+//   //       }
+//  const da = User.findOneAndUpdate(
+//     { _id: _id },
+//     {
+//       $set: {
+//         Id: Id,
+//         fullName: fullName,
+//         email: email,
+//         gender: gender,
+//         phoneNumber: phoneNumber,
+//         role: role,
+//         department: department,
+//       },
+//     },
+//     (err, doc) => {
+//       if (err) return console.log(err);
+//       res.json(doc);
+//       console.log(da);
+//     }
+//   );
+
+// };
 exports.Updateannouncement = async (req, res) => {
   const { data } = req.body;
   console.log(data);
-  (id = data.id),
-    (AnnouncementTitle = data.title),
-    (Announcement = data.message),
-    (AnonouncerName = data.anonouncerName),
-    (ClassId = data.classId),
-    (ClassLink = data.URL),
-    (Time = data.startedTime);
+    var id = data.data._id;
+    var AnnouncementTitle = data.data.title;
+    var Announcement = data.data.message;
+    var AnonouncerName = data.data.anonouncerName;
+    var ClassId = data.data.classId;
+    var ClassLink = data.data.URL;
+    var Time = data.data.startedTime;
   Announcements.updateMany(
     { _id: id },
     {
