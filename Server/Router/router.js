@@ -35,6 +35,9 @@ route.get('/api/forgot-password',controller.forgotPassword);
 route.post('/JoinClass', controller.JoinClass);
 route.post('/login-user', controller.loginUser);
 route.post('/ResetPassword',controller.ResetPassword);
+route.post('/UpdateCourse',controller.UpdateCourse);
+route.post('/UpdateAccount',controller.UpdateAccount);
+route.post('/Updateannouncement',controller.Updateannouncement);
 
 
 module.exports = route
