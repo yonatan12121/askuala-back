@@ -13,14 +13,10 @@ var Courses = require("../Model/Course");
 var Class = require("../Model/Class");
 var Questions = require("../Model/Question");
 
-
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET =
   "nhjndshnbhsiduy78q3ye3yhrewhriewopfew[fpe-fpe-pf[df[s;f[ds;f[ds;f[ds;f[ds;,fld,s.mdnshbgvcarfdtwygyqgygdhsabjbcnvgawqrr6t8siahjdvdgvds()!@#$%^&*";
-
-
-
 
 exports.register = async (req, res) => {
   const { data } = req.body;
@@ -40,33 +36,30 @@ exports.register = async (req, res) => {
 
   console.log("hello");
 
-  
-    try {
-      await User.create({
-        Id,
-        fullName,
-        phoneNumber,
-        gender,
-        department,
-        email,
-        password: encreptedPassword,
-        role,
-  
-        verified: false,
-      });
-  
-      console.log("success");
-     
-  
-      // this is where email verification is done
-  
-      // upto here verifcation
-      res.send({ status: "ok" });
-    } catch (error) {
-      res.send({ error });
-      console.log(error.message);
-    }
- 
+  try {
+    await User.create({
+      Id,
+      fullName,
+      phoneNumber,
+      gender,
+      department,
+      email,
+      password: encreptedPassword,
+      role,
+
+      verified: false,
+    });
+
+    console.log("success");
+
+    // this is where email verification is done
+
+    // upto here verifcation
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.send({ error });
+    console.log(error.message);
+  }
 };
 exports.loginUser = async (req, res) => {
   const { data } = req.body;
@@ -160,10 +153,10 @@ exports.storebook = (req, res) => {
   const { data } = req.body;
   var BookName = data.BookName;
   var BookAuthor = data.BookAuthor;
-  var BookYear = data.BookYear;
+  var Books = data.fileInput;
   var BookDepratment = data.BookDepratmen;
   try {
-    Book.create({ BookName, BookAuthor, BookYear, BookDepratment });
+    Book.create({ BookName, BookAuthor, Books, BookDepratment });
     res.send({ status: "ok" });
     console.log("Book created successfully");
   } catch (error) {
@@ -211,8 +204,7 @@ exports.storeAnswers = (req, res) => {
       }
     }
   );
-  }
-
+};
 
 exports.storecourse = (req, res) => {
   const { data } = req.body;
@@ -600,7 +592,6 @@ exports.removeQA = async (req, res) => {
   }
 };
 
-
 exports.forgotPassword = async (req, res) => {
   var email = req.query.email;
   console.log(email);
@@ -630,8 +621,7 @@ exports.forgotPassword = async (req, res) => {
     //   }
     // );
 
-    var forgotPasswordLink =
-      "http://localhost:3000/reset-password/?token=" ;
+    var forgotPasswordLink = "http://localhost:3000/reset-password/?token=";
     var mailOptions = {
       from: "Askuala@gmail.com",
       to: req.query.email,
@@ -643,21 +633,21 @@ exports.forgotPassword = async (req, res) => {
         "<title>Forgot Password</title>" +
         "<style> body {background-color: #FFFFFF; padding: 0; margin: 0;}</style></head>" +
         '<body style="background-color: #FFFFFF; padding: 0; margin: 0;">' +
-        '<table border="0" cellpadding="0" cellspacing="10" height="100%" bgcolor="#FFFFFF" width="100%" style="max-width: 650px;" id="bodyTable">' +
+        '<table style="max-width: 650px; background-color: #2F6296; color: #ffffff;" id="bodyTable">' +
         '<tr><td align="center" valign="top">' +
-        '<table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailContainer" style="font-family:Arial; color: #333333;">' +
+        '<table id="emailContainer" style="font-family: Arial; color: #FFFFFF; text-align: center;">' +
         '<tr><td align="left" valign="top" colspan="2" style="border-bottom: 1px solid #CCCCCC; padding-  bottom: 10px;">' +
         "</td></tr><tr>" +
-        '<td align="left" valign="top" colspan="2" style="border-bottom: 1px solid #CCCCCC; padding: 20px 0 10px 0;">' +
-        '<span style="font-size: 18px; font-weight: normal;">FORGOT PASSWORD</span></td></tr><tr>' +
+        '<td align="left" valign="top" colspan="2" style="border-bottom: 1px solid #FFFFFF; padding: 20px 0 10px 0;">' +
+        '<span style="font-size: 24px; font-weight: normal;color: #FFFFFF">FORGOT PASSWORD</span></td></tr><tr>' +
         '<td align="left" valign="top" colspan="2" style="padding-top: 10px;">' +
-        '<span style="font-size: 12px; line-height: 1.5; color: #333333;">' +
-        " We have sent you this email in response to your request to reset your password on <a href='http://localhost:3000'> Ethioian Refugee Sit</a><br/><br/>" +
-        'To reset your password for, please follow the link below: <a href="' +
+        '<span style="font-size: 18px; line-height: 1.5; color: #333333;">' +
+        " We have sent you this email in response to your request to reset your password on <a href='http://localhost:3000'>Askula Management System</a><br/><br/>" +
+        'To reset your password for, please follow the link below: <button style="font:inherit; cursor: pointer; border: #272727 2px solid; background-color: transparent; border-radius: 5px;"><a href="' +
         forgotPasswordLink +
-        '">Reset Password</a><br/><br/>' +
+        '"style="color: #272727; text-decoration: none;">Reset Password</a></button><br/><br/>' +
         "We recommend that you keep your password secure and not share it with anyone.If you didn't request to this message, simply ignore this message.<br/><br/>" +
-        "Ethiopian Refugee Customer Service </span> </td> </tr> </table> </td> </tr> </table> </body></html>",
+        "Ethiopian Askula Management System </span> </td> </tr> </table> </td> </tr> </table> </body></html>",
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -684,9 +674,13 @@ exports.ResetPassword = async (req, res) => {
   console.log(newPassword, email);
   // Edirs.updateOne({ "NameOfeDirr": edirrName }, { $set: { "Members.$[].Payment": "Payed" } }, (err, doc) => {
   const encreptedPassword = await bcrypt.hash(newPassword, 10);
-  User.updateOne({ "email": email }, { $set: { password: encreptedPassword } }, (err, doc) => {
-    if (err) return console.log(err);
-    return res.json({ doc });
-  })
+  User.updateOne(
+    { email: email },
+    { $set: { password: encreptedPassword } },
+    (err, doc) => {
+      if (err) return console.log(err);
+      return res.json({ doc });
+    }
+  );
   // $elemMatch: { "Creator": email }
-}
+};
