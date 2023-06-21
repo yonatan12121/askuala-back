@@ -685,36 +685,52 @@ exports.ResetPassword = async (req, res) => {
     }
   );
   // $elemMatch: { "Creator": email }
-}
+};
 exports.UpdateCourse = async (req, res) => {
-  const { data} = req.body;
-  (id=data.id)
-  (CourseId = data.courseId),
+  const { data } = req.body;
+  (id = data.id)((CourseId = data.courseId)),
     (CourseName = data.courseName),
     (Ects = data.ETCS),
     (CreaditHour = data.creaditHours),
     (lectureID = data.teacherId),
     (courseDept = data.courseDept),
     (CourseCreator = data.CourseCreator);
-  console.log(id,CourseId,
+  console.log(
+    id,
+    CourseId,
     CourseName,
     Ects,
     CreaditHour,
     lectureID,
     courseDept,
-    CourseCreator);
+    CourseCreator
+  );
   // console.log(postImage);
-  UserInfo.updateMany({ _id: id }, { $set: { CourseId: CourseId, CourseName: CourseName, Ects: Ects, CreaditHour: CreaditHour, lectureID: lectureID, courseDept: courseDept, CourseCreator: CourseCreator } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  Courses.updateMany(
+    { _id: id },
+    {
+      $set: {
+        CourseId: CourseId,
+        CourseName: CourseName,
+        Ects: Ects,
+        CreaditHour: CreaditHour,
+        lectureID: lectureID,
+        courseDept: courseDept,
+        CourseCreator: CourseCreator,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 exports.UpdateAccount = async (req, res) => {
   const { data } = req.body;
   console.log(data);
   // const role = "student";
   // const Creator =email;
+  const _id = data._id;
   const Id = data.id;
   const fullName = data.FullName;
   const email = data.email;
@@ -722,28 +738,53 @@ exports.UpdateAccount = async (req, res) => {
   const phoneNumber = data.phoneNumber;
   const role = data.role;
   const department = data.department;
-  
+
   console.log(data);
   // console.log(postImage);
-  UserInfo.updateMany({ _id: Id }, { $set: { fullName: fullName, email: email, gender: gender, phoneNumber: phoneNumber, role: role, department: department } }, (err, doc) => {
-    if (err) return console.log(err); 
-    res.json(doc)
-  });
-
-}
+  User.updateMany(
+    { _id: _id },
+    {
+      $set: {
+        Id: Id,
+        fullName: fullName,
+        email: email,
+        gender: gender,
+        phoneNumber: phoneNumber,
+        role: role,
+        department: department,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
 exports.Updateannouncement = async (req, res) => {
   const { data } = req.body;
   console.log(data);
-  (id=data.id),
-  (AnnouncementTitle = data.title),
+  (id = data.id),
+    (AnnouncementTitle = data.title),
     (Announcement = data.message),
     (AnonouncerName = data.anonouncerName),
     (ClassId = data.classId),
     (ClassLink = data.URL),
     (Time = data.startedTime);
-  UserInfo.updateMany({ _id: id }, { $set: { AnnouncementTitle: AnnouncementTitle, Announcement: Announcement, AnonouncerName: AnonouncerName, ClassId: ClassId, ClassLink: ClassLink, Time: Time } }, (err, doc) => {
-    if (err) return console.log(err);
-    res.json(doc)
-  });
-
-}
+  Announcements.updateMany(
+    { _id: id },
+    {
+      $set: {
+        AnnouncementTitle: AnnouncementTitle,
+        Announcement: Announcement,
+        AnonouncerName: AnonouncerName,
+        ClassId: ClassId,
+        ClassLink: ClassLink,
+        Time: Time,
+      },
+    },
+    (err, doc) => {
+      if (err) return console.log(err);
+      res.json(doc);
+    }
+  );
+};
