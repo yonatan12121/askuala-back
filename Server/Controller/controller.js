@@ -63,6 +63,7 @@ exports.register = async (req, res) => {
 };
 exports.loginUser = async (req, res) => {
   const { data } = req.body;
+  console.log(data);
   var Id = data.email;
   var password = data.password;
   const user = await User.findOne({ Id });
@@ -278,7 +279,15 @@ exports.storeClass = (req, res) => {
 // };
 
 exports.storeannouce = (req, res) => {
-q
+  const { data } = req.body;
+  console.log(data);
+
+  (AnnouncementTitle = data.title),
+    (Announcement = data.message),
+    (AnonouncerName = data.anonouncerName),
+    (ClassId = data.classId),
+    (ClassLink = data.URL),
+    (Time = data.startedTime);
   try {
     Announcements.create({
       AnnouncementTitle,
