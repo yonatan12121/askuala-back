@@ -763,7 +763,7 @@ exports.UpdateAccount = async (req, res) => {
 exports.Updateannouncement = async (req, res) => {
   const { data } = req.body;
   console.log(data);
-  (id = data.id),
+  (id = data._id),
     (AnnouncementTitle = data.title),
     (Announcement = data.message),
     (AnonouncerName = data.anonouncerName),
