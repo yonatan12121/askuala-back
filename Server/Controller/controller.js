@@ -688,7 +688,7 @@ exports.ResetPassword = async (req, res) => {
 };
 exports.UpdateCourse = async (req, res) => {
   const { data } = req.body;
-  (id = data.id)((CourseId = data.courseId)),
+  (id = data._id)((CourseId = data.courseId)),
     (CourseName = data.courseName),
     (Ects = data.ETCS),
     (CreaditHour = data.creaditHours),
