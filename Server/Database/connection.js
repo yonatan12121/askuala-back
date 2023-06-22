@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
    
- const con = await mongoose.connect(process.env.MONGO_URL, {
+ const con = await mongoose.connect(process.env.MONGO_URL|| 
+  'mongodb+srv://root:root@cluster0.nwowzfp.mongodb.net/Askuala?retryWrites=true&w=majority'
+  , {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
