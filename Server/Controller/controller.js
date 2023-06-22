@@ -693,7 +693,7 @@ exports.UpdateCourse = async (req, res) => {
     var CourseName = data.data.courseName;
     var Ects = data.data.ETCS;
     var CreaditHour = data.data.creaditHours;
-    var lectureID = data.data.teacherId;rs
+    var lectureID = data.data.teacherId;
     var courseDept = data.data.courseDept;
     var CourseCreator = data.data.CourseCreator;
   console.log(
@@ -738,7 +738,6 @@ exports.UpdateAccount = async (req, res) => {
   var role = data.data.role;
   var department = data.data.department;
 
-  // console.log("update", data);
   console.log("update", data.data.FullName,
     email,
     gender,
@@ -765,73 +764,8 @@ exports.UpdateAccount = async (req, res) => {
       return res.json({ doc });
     }
   );
-  // console.log(da);
-  // User.findOneAndUpdate(
-  //   { _id: "6492f18f98f1bed2c6dcc3aa" },
-  //   {
-  //     $set: {
-  //       Id: Id,
-  //       fullName: data.FullName,
-  //       email: email,
-  //       gender: gender,
-  //       phoneNumber: phoneNumber,
-  //       role: role,
-  //       department: department,
-  //     },
-  //   },
-  //   { new: true }, // This option returns the updated document
-  //   (err, doc) => {
-  //     if (err) return console.log(err);
-  //     res.json(doc);
-  //     console.log(doc);
-  //   }
-  // );
+
 };
-
-
-// exports.UpdateAccount = async (req, res) => {
-//   const { data } = req.body;
-//   console.log(data);
-//   // const role = "student";
-//   // const Creator =email;
-//   const _id = data._id;
-//   const Id = data.id;
-//   const fullName = data.FullName;
-//   const email = data.email;
-//   const gender = data.gender;
-//   const phoneNumber = data.phoneNumber;
-//   const role = data.role;
-//   const department = data.department;
-
-//   console.log("update",data);
-//   // const da = User.findById({_id:_id})
-//   // console.log(da);
-//   // (err, doc) => {
-//   //         if (err) return console.log(err);
-//   //         res.json(doc);
-//   //         console.log(da);
-//   //       }
-//  const da = User.findOneAndUpdate(
-//     { _id: _id },
-//     {
-//       $set: {
-//         Id: Id,
-//         fullName: fullName,
-//         email: email,
-//         gender: gender,
-//         phoneNumber: phoneNumber,
-//         role: role,
-//         department: department,
-//       },
-//     },
-//     (err, doc) => {
-//       if (err) return console.log(err);
-//       res.json(doc);
-//       console.log(da);
-//     }
-//   );
-
-// };
 exports.Updateannouncement = async (req, res) => {
   const { data } = req.body;
   console.log(data);
